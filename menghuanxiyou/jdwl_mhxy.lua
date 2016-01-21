@@ -43,11 +43,11 @@ function main()
 		four = 0
 		five = 0	
 		denglu()--登录游戏
-		levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
+		--levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
 		fuli()
 		zawu()
 		--加帮派
-		jiarubp()
+		--[[jiarubp()
 		--领双
 		shuangbei()
 		--随机日常任务
@@ -57,7 +57,7 @@ function main()
 		--运镖
 		yunbiao()
 		--替换马面
-		mamian()
+		mamian()--]]
 		--使用宝图
 		shiyongbaotu()
 		--学习技能
@@ -68,7 +68,7 @@ function main()
 		--fuli()
 		--卖东西
 		zawu()
-		--chushou()
+		chushou()
 		--整理装备
 		equip()
 		--下线
@@ -2179,6 +2179,8 @@ function zawu()
 	end
 end
 
+
+
 --摆摊
 function chushou()
 	jdwlLog('出售东西')
@@ -2191,6 +2193,7 @@ function chushou()
 	local isok = 0
 	local cz=0
 	local tt=os.time()
+	local cs=0
 	while true do
 		if os.difftime(os.time(),tt) > 180 then
 			jdwlLog('出售东西超时')
@@ -2211,6 +2214,14 @@ function chushou()
 			click(x,y)
 		elseif count > 8 then
 			isok=1
+			closewin()
+			count=0
+		elseif cs>8 then
+			if DmFindPic('x_baitan.bmp',85,512,73,523,87) then
+				click(x,y)
+			end
+			cs=0
+			isok = 1
 			closewin()
 		--选择摆摊
 		elseif DmFindPic('baitan.bmp',80,1013,267,1029,283) then
@@ -2235,7 +2246,8 @@ function chushou()
 			jia = 0
 			jian = 0
 			tt=os.time()
-		elseif cz > 10 and DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
+			cs=cs+1
+		elseif cz > 5 and DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
 			equal =1
 			cz = 0
 		--降价
@@ -2275,6 +2287,10 @@ function chushou()
 		elseif DmFindPic('meiyouwuping.bmp',85,725,242,743,262) then
 			closewin()
 			isok = 1
+		--出售法宝碎片
+		elseif DmFindPic('shangjiafabao.bmp',85,426,530,439,542) then
+			click(x,y)
+			cs=cs+1
 		else
 			mSleep(500)
 			connect()
@@ -2414,7 +2430,7 @@ end
 --修改文本
 function xiugaiwenben()
 	jdwlLog('xiugaiwenben')
-	local file,hello,l,ourline
+	local file,hello,l,ourline,isover
 	file = io.open("/var/touchelf/scripts/avf.txt","r")
 	ourline = tonumber(file:read())
 	file:close()
@@ -2427,11 +2443,14 @@ function xiugaiwenben()
 	file = io.open("/var/touchelf/scripts/avf.txt","w")
 	if ourline>= index then	
 		file:write(1)
-		finish()
+		isover=true
 	else
 		file:write(ourline+1)
 	end
 	file:close()
+	if isover == true then
+		finish()
+	end
 end
 
 --关闭窗口系列
@@ -2525,6 +2544,9 @@ function connect()
 	elseif DmFindPic('duiwu.bmp',85,536,28,560,51) then--1021,48
 		click(x+485,y+20)mSleep(1000)
 		closewin()
+	--当前网络不可用
+	elseif DmFindPic('dangqianwangluo.bmp',85,409,293,429,312) then--477,374
+		click(x+70,y+80)
 	--分享
 	elseif DmFindPic('x_share.bmp',85,755,187,770,199) then
 		click(x,y)
@@ -2773,8 +2795,8 @@ end
 
 
 function routerControl(deviceId,url)
-	--local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
-	local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	--local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
 	local i,j = string.find(data,'ok')
 	if i~=nil and j~=nil then
 		notifyMessage('断网请求成功')
