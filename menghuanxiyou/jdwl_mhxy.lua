@@ -46,8 +46,8 @@ function main()
 		--levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
 		fuli()
 		zawu()
-		--加帮派
-		--[[jiarubp()
+--[[		--加帮派
+		jiarubp()
 		--领双
 		shuangbei()
 		--随机日常任务
@@ -58,6 +58,8 @@ function main()
 		yunbiao()
 		--替换马面
 		mamian()--]]
+		--加帮派
+		jiarubp()		
 		--使用宝图
 		shiyongbaotu()
 		--学习技能
@@ -147,7 +149,7 @@ function denglu()
 	local isok=0
 	local start=os.time()
 	while true do
-		if os.difftime(os.time(),start) > 300 then
+		if os.difftime(os.time(),start) > 600 then
 			jdwlLog('登录超时')
 			kill()
 			isok=0
@@ -1518,7 +1520,7 @@ function equip()
 		if isok==1 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
 			jdwlLog('穿戴分解装备完成')
 			break	
-		elseif DmFindPic('yong.bmp',80,431,394,480,444) or DmFindPic('yong1.bmp',80,455,417,470,432) then
+		elseif DmFindPic('yong.bmp',80,431,394,480,444) or DmFindPic('yong1.bmp',80,455,417,470,432) or DmFindPic('shiyongzhuque.bmp',85,433,401,446,416) then
 			isok=1
 			closewin()
 		elseif os.difftime(os.time(),startTime) > 240 then
@@ -1872,6 +1874,9 @@ function zhiyao()
 		elseif isok == 1 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
 			jdwlLog('制药完成')
 			break		
+		--点击中药医理
+		elseif DmFindPic('zhongyi.bmp',85,338,213,350,224) then
+			click(x,y)			
 		--点击头像
 		elseif DmFindPic('touxiang.bmp',85,1093,39,1104,48) then
 			click(x,y)
@@ -2275,9 +2280,26 @@ function chushou()
 					equal = 1
 				end
 			elseif string.len(tostring(can)) > string.len(tostring(shiji)) then
-				jian = 1
+					local a,b
+					a = string.sub(tostring(can),1,string.len(tostring(shiji)))
+					if a==shiji then
+						equal = 1
+					elseif a <shiji then
+						jian = 1
+					elseif a > shiji then
+						jia=1
+					end
 			elseif string.len(tostring(can)) < string.len(tostring(shiji)) then
-				jia = 1
+					local a,b
+					a=string.sub(tostring(shiji),1,string.len(tostring(can)))
+					
+					if a > can then
+						jian=1
+					elseif a==can then
+						equal = 1
+					elseif a < can then
+						jia = 1
+					end
 			end
 		--上架成功
 		elseif DmFindPic('shangjiachenggong.bmp',85,547,422,561,439) then
@@ -2331,11 +2353,13 @@ function juti()
 			mSleep(100)
 		end
 	end
-	local j = 1
+	local j = 1	
 	local jiage=''
-	for j=1,#ret do
-		jiage =jiage..ret[j]
-	end
+		for j=1,#ret do
+			if type(ret[j])=="number" then
+				jiage =jiage..ret[j]
+			end
+		end
 	jdwlLog('具体的价格识别时间为'..os.difftime(os.time(),start)..'秒具体价格为'..jiage)	
 	return jiage
 end
@@ -2376,7 +2400,9 @@ function cankao()
 	local j = 1
 	local jiage=''
 	for j=1,#ret do
-		jiage =jiage..ret[j]
+		if type(ret[j])=="number" then
+			jiage =jiage..ret[j]
+		end
 	end
 	jdwlLog('参考的价格识别时间为'..os.difftime(os.time(),start)..'秒参考价格为'..jiage)
 	return jiage
@@ -2868,7 +2894,7 @@ function iGhistory()
 			click(x,y)
 		--伪造记录打开了
 		elseif DmFindPic('bianji.bmp',85,597,73,628,104) and DmFindPicFuzzy(pic,80,18,143,94,1136,0xffffff) then
-			click(x,y)mSleep(5000)
+			click(x,y)mSleep(10000)
 			jdwlLog('ig留存完成')
 			break
 		elseif DmFindPic('bianji.bmp',85,597,73,628,104) and DmFindPicFuzzy(pic,80,18,143,94,1136,0xffffff)==false and down > 3 then
