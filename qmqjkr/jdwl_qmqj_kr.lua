@@ -85,8 +85,9 @@ function main()
 		beibao()
 		leiji()
 		shiyong()
-		guzhanchang()
+		--guzhanchang()
 		jiangli()
+		zhandouli()
 	--end
 end
 
@@ -190,7 +191,14 @@ function zhuxian()
 			break
 		--到达1转1级继续
 		elseif DmFindPicFuzzy('1zhuan1.bmp',90,9,230,48,248,0xffffff) and DmFindPic('beibao.bmp',85,846,614,858,626) then
-			click(933,294)
+			--click(933,294)
+			jdwlLog('到达100级')
+			break
+		--打boss
+		elseif DmFindPic('liangbai.bmp',85,338,50,359,61) then
+			if DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
+				click(x,y)
+			end
 		--点击主线任务
 		elseif isMoveing()==false and DmFindPicFuzzy('1zhuan.bmp',90,10,232,36,249,0xffffff)==false and DmFindPic('beibao.bmp',85,846,614,858,626) and DmFindPicFuzzy('zhuxian.bmp',90,10,200,33,226,0xffffff) then
 			click(33,256)
@@ -203,8 +211,8 @@ function zhuxian()
 		elseif DmFindPic('shouzhi.bmp',85,564,527,581,541) then
 			click(1057,565)
 		--黄字转生
-		elseif DmFindPic('huangzhuansheng.bmp',80,410,436,423,446) then
-			click(x,y)
+--[[		elseif DmFindPic('huangzhuansheng.bmp',80,410,436,423,446) then
+			click(x,y)--]]
 		--任务卡顿之后对话框
 		elseif DmFindPic('lingqu.bmp',85,859,475,870,488)==false and DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
 			click(x,y)
@@ -431,6 +439,9 @@ function chibang()
 		--关闭翅膀
 		elseif isok==1 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
 			click(x,y)
+		--佩戴翅膀
+		elseif DmFindPic('peidaicb.bmp',85,541,333,554,343) then
+			click(x,y)			
 		--打开背包
 		elseif DmFindPic('beibao.bmp',85,846,614,858,626) then
 			click(x,y)
@@ -842,7 +853,7 @@ function lianxu()
 			click(x,y)
 		--点击连续登录
 		elseif DmFindPic('lianxu.bmp',85,89,314,109,336) then
-			click(x,y)
+			click(x,y)mSleep(5000)
 		--领取连续
 		elseif DmFindPic('lingqulianxu.bmp',85,861,447,876,464) then
 			click(x,y)

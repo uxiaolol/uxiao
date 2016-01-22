@@ -46,7 +46,7 @@ function main()
 		--levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
 		fuli()
 		zawu()
---[[		--加帮派
+		--加帮派
 		jiarubp()
 		--领双
 		shuangbei()
@@ -57,7 +57,7 @@ function main()
 		--运镖
 		yunbiao()
 		--替换马面
-		mamian()--]]
+		mamian()
 		--加帮派
 		jiarubp()		
 		--使用宝图
@@ -2237,7 +2237,7 @@ function chushou()
 			click(x,y)
 			count = count + 1
 		--点击要出售的物品
-		elseif DmFindPic('yaoping.bmp',80,665,150,676,161) or DmFindPic('wuping.bmp',80,663,148,678,164) then--701,190
+		elseif DmFindPic('yaoping.bmp',80,665,150,676,161) or DmFindPic('wuping.bmp',80,663,148,678,164) or DmFindPic('wuping1.bmp',85,669,149,680,156) then--701,190
 			click(x+35,y+40)
 		--当前商品没有其他玩家出售
 		elseif DmFindPic('meiyou.bmp',85,667,263,686,284) and DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
@@ -2474,9 +2474,9 @@ function xiugaiwenben()
 		file:write(ourline+1)
 	end
 	file:close()
-	if isover == true then
+--[[	if isover == true then
 		finish()
-	end
+	end--]]
 end
 
 --关闭窗口系列
