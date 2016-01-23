@@ -491,7 +491,8 @@ function shimen()
 			count = 0
 		--点击活动
 		elseif ispart==0 and (DmFindPic('huodong.bmp',80,333,28,343,41) or DmFindPic('huodong1.bmp',85,338,62,348,73)) then
-			click(x,y)			
+			click(x,y)		
+			mSleep(2000)	
 			isfind = 0
 			start = os.time()
 		--自动战斗
@@ -618,6 +619,7 @@ function dati()
 		--点击活动
 		elseif DmFindPic('huodong.bmp',80,333,28,343,41) or DmFindPic('huodong1.bmp',85,338,62,348,73) then
 			click(x,y)
+			mSleep(2000)
 			isfind = 0
 			start=os.time()
 		--使用
@@ -713,6 +715,7 @@ function fengyao()
 		--点击活动
 		elseif ispart==0 and (DmFindPic('huodong.bmp',80,333,28,343,41) or DmFindPic('huodong1.bmp',85,338,62,348,73)) then
 			click(x,y)
+			mSleep(2000)
 			isfind = 0
 			start = os.time()
 		--日常任务未选中
@@ -856,6 +859,7 @@ function mijing()
 		--点击活动
 		elseif ispart==0 and (DmFindPic('huodong.bmp',80,333,28,343,41) or DmFindPic('huodong1.bmp',85,338,62,348,73)) then
 			click(x,y)
+			mSleep(2000)
 			isfind = 0
 			start = os.time()
 		--日常任务未选中
@@ -952,6 +956,7 @@ function baotu()
 		--点击活动
 		elseif ispart==0 and (DmFindPic('huodong.bmp',80,333,28,343,41) or DmFindPic('huodong1.bmp',85,338,62,348,73)) then
 			click(x,y)
+			mSleep(2000)
 			isfind = 0
 			start = os.time()
 		--日常任务未选中
@@ -1031,6 +1036,7 @@ function yunbiao()
 		--点击活动
 		elseif ispart==0 and (DmFindPic('huodong.bmp',80,333,28,343,41) or DmFindPic('huodong1.bmp',85,338,62,348,73)) then
 			click(x,y)		
+			mSleep(2000)
 			isfind = 0
 			start = os.time()
 		--活跃不够50点
@@ -1155,6 +1161,7 @@ function bangpairenwu()
 		--点击活动
 		elseif ispart==0 and (DmFindPic('huodong.bmp',80,333,28,343,41) or DmFindPic('huodong1.bmp',85,338,62,348,73)) then
 			click(x,y)			
+			mSleep(2000)
 			isfind = 0		
 			dianji = 0
 			start = os.time()
