@@ -715,19 +715,19 @@ function yaodian()
 			click(x,y)
 			isok=1--]]
 		--走到福利官
---[[		elseif DmFindPic('fuliguan.bmp',85,861,534,880,548) or DmFindPic('fuliguan1.bmp',85,863,531,882,542) then
+		elseif DmFindPic('fuliguan.bmp',85,861,534,880,548) or DmFindPic('fuliguan1.bmp',85,863,531,882,542) then
 			click(x+5,y+5)mSleep(500)
 		--到达莱亚
 		elseif DmFindPic('x_fuliguan.bmp',85,1001,222,1017,231) then
 			click(x,y)
-			isok=1	--]]
+			isok=1	
 		--走到一个npc
-		elseif DmFindPic('npc.bmp',85,853,313,869,328) or DmFindPic('npc1.bmp',85,854,310,868,324) then
+--[[		elseif DmFindPic('npc.bmp',85,853,313,869,328) or DmFindPic('npc1.bmp',85,854,310,868,324) then
 			click(x+5,y+5)mSleep(500)
 		--到达莱亚
 		elseif DmFindPic('x_fuliguan.bmp',85,1001,222,1017,231) then
 			click(x,y)
-			isok=1			
+			isok=1	--]]		
 		else
 			mSleep(500)
 			connect()
@@ -738,6 +738,7 @@ end
 --等待对方给东西
 function shou()
 	jdwlLog('开始收钱')
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) then
@@ -759,7 +760,7 @@ function shou()
 			click(x,y)
 		--点击交易
 		elseif DmFindPic('jiaoyianniu.bmp',85,436,575,452,587) then
-			click(x,y)mSleep(1000)
+			click(x,y)mSleep(3000)
 		elseif DmFindPic('x_weizhijiaoyi.bmp',85,1096,37,1109,51) then
 			click(x,y)			
 		elseif DmFindPic('x_zhuangbei.bmp',85,785,33,800,44) then

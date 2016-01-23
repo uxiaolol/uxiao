@@ -91,9 +91,11 @@ function emgcms()
 		beibao()
 		shiyong()
 		jiangli()
+		qifu()
 		zhandouli()
 		emgc()
 		beibao("no")
+		yaodian()
 		geidongxi()
 		tuichu()
 	end
@@ -126,6 +128,7 @@ function zhandouli()
 end
 --领取奖励
 function jiangli()
+	leiji()
 	dengji()
 	lianxu()
 	meiri()
@@ -491,8 +494,14 @@ function emgc()
 			click(x,y)
 			isguwu=os.time()
 		elseif isboss == 1 and 	DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('quxiaoguaji.bmp',85,961,453,972,462) then
-			click(x,y)
+			local wait=0
 			bosstime=os.time()
+			for wait = 1,10 do
+				mSleep(1000)
+			end
+			if DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
+				click(x,y)
+			end			
 		elseif isboss == 1 and 	DmFindPic('fbxx.bmp',85,996,21,1012,30) then
 			--释放技能
 			if DmFindPic('diyihuo.bmp',85,1065,352,1075,362) or DmFindPic('jiguang.bmp',85,1066,447,1078,459) or DmFindPic('heilongbo.bmp',85,952,559,963,570) then
@@ -715,19 +724,19 @@ function yaodian()
 			click(x,y)
 			isok=1--]]
 		--走到福利官
---[[		elseif DmFindPic('fuliguan.bmp',85,861,534,880,548) or DmFindPic('fuliguan1.bmp',85,863,531,882,542) then
+		elseif DmFindPic('fuliguan.bmp',85,861,534,880,548) or DmFindPic('fuliguan1.bmp',85,863,531,882,542) then
 			click(x+5,y+5)mSleep(500)
 		--到达莱亚
 		elseif DmFindPic('x_fuliguan.bmp',85,1001,222,1017,231) then
 			click(x,y)
-			isok=1	--]]
+			isok=1	
 		--走到一个npc
-		elseif DmFindPic('npc.bmp',85,853,313,869,328) or DmFindPic('npc1.bmp',85,854,310,868,324) then
+--[[		elseif DmFindPic('npc.bmp',85,853,313,869,328) or DmFindPic('npc1.bmp',85,854,310,868,324) then
 			click(x+5,y+5)mSleep(500)
 		--到达莱亚
 		elseif DmFindPic('x_fuliguan.bmp',85,1001,222,1017,231) then
 			click(x,y)
-			isok=1			
+			isok=1	--]]		
 		else
 			mSleep(500)
 			connect()
