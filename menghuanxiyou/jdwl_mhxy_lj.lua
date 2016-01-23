@@ -35,6 +35,59 @@ function main()
 	mSleep(2000)
 	unlock()
 	rotateScreen(90)
+	lianji()
+end
+
+--练级模式
+function lianji()
+	while true do
+		rotateScreen(90)	
+		one=0
+		two = 0
+		three = 0
+		four = 0
+		five = 0	
+		denglu()--登录游戏
+		levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
+		fuli()
+		zawu()
+		--加帮派
+		jiarubp()
+		--领双
+		shuangbei()
+		--随机日常任务
+		rand()
+		--帮派任务
+		bangpairenwu()
+		--运镖
+		yunbiao()
+		--替换马面
+		mamian()
+		--加帮派
+		jiarubp()		
+		--使用宝图
+		shiyongbaotu()
+		--学习技能
+		huoli()
+		--做药
+		zhiyao()
+		--福利
+		--fuli()
+		--卖东西
+		zawu()
+		chushou()
+		--整理装备
+		equip()
+		--下线
+		exit()
+		--断网
+		router()
+		--IG留存
+		iGhistory()
+	end	
+end
+--日常模式
+function richang()
 	while true do
 		rotateScreen(90)	
 		one=0
@@ -79,7 +132,7 @@ function main()
 		router()
 		--IG留存
 		iGhistory()
-	end
+	end	
 end
 
 function rand()
@@ -895,6 +948,9 @@ function mijing()
 			closewin()
 			cnt=0
 			start = os.time()
+		elseif cnt>3 and DmFindPic('richangrenwu1.bmp',85,157,106,177,129) then
+			isok=1
+			cnt=0
 		elseif DmFindPic('richangrenwu1.bmp',85,157,106,177,129) and DmFindPic('mijing.bmp',80,284,88,1009,452)==false then	
 			myMove_UD(989,391,989,295,10)
 			cnt=cnt+1
@@ -2481,9 +2537,9 @@ function xiugaiwenben()
 		file:write(ourline+1)
 	end
 	file:close()
---[[	if isover == true then
+	if isover == true then
 		finish()
-	end--]]
+	end
 end
 
 --关闭窗口系列
@@ -2828,8 +2884,8 @@ end
 
 
 function routerControl(deviceId,url)
-	local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
-	--local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	--local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
 	local i,j = string.find(data,'ok')
 	if i~=nil and j~=nil then
 		notifyMessage('断网请求成功')
