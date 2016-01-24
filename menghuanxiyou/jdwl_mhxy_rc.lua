@@ -91,7 +91,7 @@ function richang()
 	while true do
 		rotateScreen(90)	
 		one=0
-		two = 0
+		two = 0 
 		three = 0
 		four = 0
 		five = 0	
@@ -300,6 +300,7 @@ function denglu()
 		--登录卡住了 服务器加载不完全
 		elseif DmFindPic('fuwuqi.bmp',85,509,27,526,43) and DmFindPic('yiyou.bmp',85,264,91,276,104)==false and DmFindPic('x_fuwuqi.bmp',85,1003,31,1016,41) then
 			click(x,y)
+			os.execute("reboot")
 		--关闭福利	
 		elseif DmFindPic('x_fulia.bmp',85,958,73,973,84) then
 			click(x,y)			
@@ -1196,6 +1197,7 @@ function bangpairenwu()
 			cnt=0
 			dianji=0
 			jdwlLog('帮派任务卡住了')
+			os.execute("reboot")
 		--点击帮派任务字样
 		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and (DmFindPicFuzzy('xuanwu.bmp',90,920,163,982,452,0xffffff) or DmFindPicFuzzy('zhuque.bmp',90,920,163,982,452,0xffffff))and isMoveing()==false then
 			click(x,y)
@@ -1934,6 +1936,7 @@ function zhiyao()
 			isok = 0
 			count = 0
 			kill()
+			tt=os.time()
 		elseif isok == 1 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
 			jdwlLog('制药完成')
 			break		
@@ -1970,6 +1973,9 @@ function zhiyao()
 		elseif DmFindPic('wufa1.bmp',85,584,293,597,306) then
 			notifyMsg('金币不够')
 			isok = 1
+		--消耗银币炼药
+		elseif DmFindPic('xiaohaoyinbi.bmp',85,537,439,555,450) then
+			click(x,y)			
 		--点击炼药
 		elseif DmFindPic('lianyao.bmp',85,775,504,787,520) and isok == 0 then
 			click(x,y)
@@ -2639,6 +2645,9 @@ function connect()
 	--分享
 	elseif DmFindPic('x_share.bmp',85,755,187,770,199) then
 		click(x,y)
+	--我有经验
+	elseif DmFindPic('woyoujingyan.bmp',85,478,432,493,444) then
+		click(x,y)		
 	end
 end
 
