@@ -406,6 +406,7 @@ function levelup()
 			click(x,y)
 		--点击主线任务
 		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and DmFindPicFuzzy('jueseshengji.bmp',95,993,168,1018,196,0xffffff)==false and DmFindPic('renwu.bmp',85,944,128,955,139) and isMoveing() == false then
+			
 			click(979,201)
 		--师门购买兵器
 		elseif DmFindPic('goumaibingqi.bmp',85,831,511,845,525) then
@@ -931,7 +932,7 @@ function mijing()
 			isok=1
 			closewin()		
 		--查找秘境任务
-		elseif DmFindPic('richangrenwu1.bmp',85,157,106,177,129) and (DmFindPic('mijing.bmp',80,370,111,416,348) or DmFindPic('mijing.bmp',80,737,110,786,348) )then
+		elseif DmFindPic('richangrenwu1.bmp',85,157,106,177,129) and (DmFindPic('mijing.bmp',80,284,88,1009,452))then
 			notifyMsg(x..','..y)mSleep(1000)
 			isfind=1
 			--计算参加按钮的相对位置
@@ -2893,8 +2894,8 @@ end
 
 
 function routerControl(deviceId,url)
-	--local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
-	local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	--local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
 	local i,j = string.find(data,'ok')
 	if i~=nil and j~=nil then
 		notifyMessage('断网请求成功')

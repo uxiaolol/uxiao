@@ -35,7 +35,7 @@ function main()
 	mSleep(2000)
 	unlock()
 	rotateScreen(90)
-	lianji()
+	richang()
 end
 
 --练级模式
@@ -91,12 +91,12 @@ function richang()
 	while true do
 		rotateScreen(90)	
 		one=0
-		two = 0
+		two = 0 
 		three = 0
 		four = 0
 		five = 0	
 		denglu()--登录游戏
-		--levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
+		levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
 		fuli()
 		zawu()
 		--加帮派
@@ -147,11 +147,11 @@ function rand()
 			dati()
 		elseif start == 4 and four==0 then
 			baotu()
---[[		elseif start == 5 and five==0 then
-			mijing()--]]
+		elseif start == 5 and five==0 then
+			mijing()
 		end
 		
-		if  one== 1 and two==1 and three==1 and four==1 --[[and five==1 --]] then
+		if  one== 1 and two==1 and three==1 and four==1 and five==1  then
 			jdwlLog('随机日常任务结束')
 			break
 		end
@@ -304,10 +304,7 @@ function denglu()
 			os.execute("reboot")
 		--关闭福利	
 		elseif DmFindPic('x_fulia.bmp',85,958,73,973,84) then
-			click(x,y)	
-		--我有经验
-		elseif DmFindPic('woyoujingyan.bmp',85,478,432,493,444) then
-			click(x,y)	start = os.time()	 						
+			click(x,y)			
 		else
 			mSleep(500)
 			connect()
@@ -402,6 +399,10 @@ function levelup()
 		--技能升级
 		elseif DmFindPic('dianjishengji.bmp',85,885,515,897,524) then
 			click(894,569) start = os.time()
+		--帮派任务都出来了
+		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and DmFindPicFuzzy('xuanwu.bmp',90,920,163,982,452,0xffffff) or DmFindPicFuzzy('zhuque.bmp',90,920,163,982,452,0xffffff) or DmFindPicFuzzy('qinglong.bmp',90,920,163,982,452,0xffffff) and isMoveing()==false	then
+			jdwlLog("主线任务完成了")
+			break
 		--角色升级
 		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and DmFindPicFuzzy('jueseshengji.bmp',95,993,168,1018,196,0xffffff) and DmFindPicFuzzy('shimen.bmp',90,926,256,951,280,0xffffff) and  isMoveing() == false then
 			click(971,281)
@@ -411,18 +412,27 @@ function levelup()
 		--点击主线任务
 		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and DmFindPicFuzzy('jueseshengji.bmp',95,993,168,1018,196,0xffffff)==false and DmFindPic('renwu.bmp',85,944,128,955,139) and isMoveing() == false then
 			click(979,201)
+		--购买摆摊物品
+		elseif DmFindPic('pengren.bmp',85,351,158,363,168) then
+			click(x,y) start = os.time()
+		elseif DmFindPic('pengren1.bmp',85,352,157,364,171) and DmFindPic('goumaipengren.bmp',85,847,566,860,582) then
+			click(x,y) start = os.time()
 		--师门购买兵器
 		elseif DmFindPic('goumaibingqi.bmp',85,831,511,845,525) then
 			click(x,y) start = os.time()
 		--师门购买宠物
 		elseif DmFindPic('goumaichongwu.bmp',85,886,568,900,580) then
+			click(x,y)mSleep(500)
+			closewin() start = os.time()
+		--上交任务物品/任务物品选择
+		elseif DmFindPic('wupingxuanze.bmp',85,926,517,937,525) then
 			click(x,y) start = os.time()
 		--上交兵器
 		elseif DmFindPic('shangjiaobingqi.bmp',85,943,512,954,523) then
 			click(x,y) start = os.time()
 		--上交宠物
 		elseif DmFindPic('shangjiaochongwu.bmp',85,740,520,754,531) then
-			click(x,y) start = os.time()
+			click(x,y)		 start = os.time()	
 		--选择龟丞相
 		elseif DmFindPic('gui.bmp',85,447,506,465,523) then--422,297
 			click(x-20,y-210) start = os.time()
@@ -935,7 +945,7 @@ function mijing()
 			isok=1
 			closewin()		
 		--查找秘境任务
-		elseif DmFindPic('richangrenwu1.bmp',85,157,106,177,129) and (DmFindPic('mijing.bmp',80,370,111,416,348) or DmFindPic('mijing.bmp',80,737,110,786,348) )then
+		elseif DmFindPic('richangrenwu1.bmp',85,157,106,177,129) and (DmFindPic('mijing.bmp',80,284,88,1009,452) )then
 			notifyMsg(x..','..y)mSleep(1000)
 			isfind=1
 			--计算参加按钮的相对位置
@@ -1979,7 +1989,7 @@ function zhiyao()
 			isok = 1
 		--消耗银币炼药
 		elseif DmFindPic('xiaohaoyinbi.bmp',85,537,439,555,450) then
-			click(x,y)
+			click(x,y)			
 		--点击炼药
 		elseif DmFindPic('lianyao.bmp',85,775,504,787,520) and isok == 0 then
 			click(x,y)
@@ -2547,9 +2557,9 @@ function xiugaiwenben()
 		file:write(ourline+1)
 	end
 	file:close()
-	if isover == true then
+--[[	if isover == true then
 		finish()
-	end
+	end--]]
 end
 
 --关闭窗口系列

@@ -80,7 +80,6 @@ function main()
 	unlock()
 	rotateScreen(90)
 	shouqian()
-	
 end
 
 --恶魔广场模式
@@ -223,7 +222,7 @@ function denglu()
 		elseif DmFindPic('huanhang.bmp',85,967,593,985,609)	then
 			click(x,y)
 		--键盘弹起
-		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) or DmFindPic('diqiu1.bmp',85,152,596,167,613) then--975,601
 			click(x+796,y+5)			
 		--电池启动
 		elseif DmFindPic('dianchi.bmp',85,20,68,31,77) then
@@ -701,7 +700,7 @@ function bingfenggu()
 	local isok=0
 	while true do
 		--屏蔽玩家
-		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) then
+		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)
 		--到冰风谷了                                                               
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -717,7 +716,7 @@ function bingfenggu()
 		elseif DmFindPic('bfg.bmp',85,358,253,369,265) then
 			click(x,y)mSleep(1000)
 						--关闭地图
-			if DmFindPic('x_ditu.bmp',85,1090,41,1100,54) then
+			if DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then
 				click(x,y)
 			end
 		--打开地图
@@ -740,12 +739,12 @@ function yaodian()
 	local isok=0
 	while true do
 		--屏蔽玩家
-		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) then
+		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)		
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('到达勇者药店')
 			break
-		elseif isok==1 and DmFindPic('x_ditu.bmp',85,1089,39,1102,50) then
+		elseif isok==1 and DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then
 			click(x,y)mSleep(500)
 		--地图倒三角
 		elseif DmFindPic('daosanjiao.bmp',85,1113,23,1125,32) then
@@ -789,12 +788,14 @@ function shou()
 	local zl=os.time()
 	while true do
 		--屏蔽玩家
-		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) then
+		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
 		elseif count > 20 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			mSleep(500)
-			fanhuijuese()
+			if DmFindPic('beibao.bmp',85,846,614,858,626) then
+				fanhuijuese()
+			end
 			count=0
 		--打开聊天
 		elseif DmFindPic('liaotian.bmp',85,751,590,777,601) then
@@ -804,7 +805,7 @@ function shou()
 			click(x,y)
 		--查看密语
 		elseif DmFindPic('fasong.bmp',85,953,586,971,600) and DmFindPicFuzzy('siliao.bmp',85,246,408,291,535,0xffffff) then--329,422
-			click(x+83,y+14)mSleep(1500)
+			click(x+83,y+14)mSleep(500)
 			count = count + 1
 		--对方面板打开交易对方
 		elseif DmFindPic('jiaoyiduifang.bmp',85,891,548,906,558) then
@@ -827,7 +828,7 @@ function shou()
 		elseif DmFindPic('x_zhuangbei.bmp',85,785,33,800,44) then
 			click(x,y)
 		--键盘弹起
-		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		elseif DmFindPic('diqiu.bmp',85,179,596,194,610)  or DmFindPic('diqiu1.bmp',85,152,596,167,613)then--975,601
 			click(x+796,y+5)				
 		else
 			mSleep(300)
@@ -888,7 +889,7 @@ function jiaoyi()
 			end
 			
 		--键盘弹起
-		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) or DmFindPic('diqiu1.bmp',85,152,596,167,613) then--975,601
 			click(x+796,y+5)
 		else
 			mSleep(500)
@@ -909,6 +910,8 @@ function fanhuijuese()
 		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) then
 			jdwlLog('返回角色完成')
 			break
+		elseif DmFindPic("x_renwu.bmp",85,1031,45,1048,57) then
+			click(x,y)
 		--返回角色选择
 		elseif DmFindPic('fanhuijuese.bmp',85,502,363,515,374) then
 			click(x,y)
@@ -1732,7 +1735,7 @@ function tuichu()
 				inputText(code)
 			--end
 		--键盘弹起
-		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) or DmFindPic('diqiu1.bmp',85,152,596,167,613) then--975,601
 			click(x+796,y+5)	
 			shuru=1		
 		else

@@ -96,7 +96,9 @@ function emgcms()
 		emgc()
 		beibao("no")
 		yaodian()
-		geidongxi()
+		if bubangding()==1 then
+			geidongxi()
+		end
 		tuichu()
 	end
 end
@@ -124,15 +126,15 @@ function zhandouli()
 	xianglian()
 	--jingling()
 	chibang()
-	chengjiu()
+	--chengjiu()
 end
 --领取奖励
 function jiangli()
 	leiji()
 	dengji()
-	lianxu()
+	--lianxu()
 	meiri()
-	youjian()
+	--youjian()
 end
 
 --解除锁屏
@@ -177,17 +179,17 @@ function denglu()
 			jdwlLog('登录超时')
 			start=os.time()
 		elseif DmFindPic('meijuese.bmp',85,115,217,131,233) then
-			click(x,y) start=os.time()
+			click(x,y) 
 		--名字有问题
 		elseif DmFindPic('chuangjian.bmp',85,888,567,901,581) and DmFindPic('mingziqueding.bmp',85,638,431,649,442) then
 			click(x,y)mSleep(1000)
-			if DmFindPic('name.bmp',85,679,590,690,602) then
-				click(x,y)
+			
+				click(566,572)
 				inputText('\b\b\b\b\b\b\b\b\b\b')
 				local name = randomstring(7)
 				inputText(name)
-			end
-			start=os.time()
+			
+			
 		--什么鬼确定
 		elseif DmFindPic('smqueding.bmp',85,640,431,651,442) then
 			click(x,y)
@@ -198,7 +200,7 @@ function denglu()
 			click(x,y)		
 		--登录界面进入游戏
 		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) then
-			click(x,y) start=os.time()		
+			click(x,y) 
 		--有角色直接进入游戏
 		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) then
 			click(x,y)					
@@ -211,24 +213,24 @@ function denglu()
 		--创建角色之后弹出个不认识的框
 		elseif DmFindPic('burenshi.bmp',85,549,226,561,237) and DmFindPic('burenshiqueding.bmp',85,639,429,651,437) then
 			click(x,y)
-			start=os.time()
+			
 		--开始征程
 		elseif DmFindPic('kaishizhengcheng.bmp',85,795,464,806,473) then
 			click(x,y)
 		--登录时候的广告
 		elseif DmFindPic('close.bmp',85,1063,599,1086,612) or DmFindPic('close1.bmp',85,1063,599,1077,613) then
-			click(x,y) start=os.time()
+			click(x,y)
 		--键盘弹起
 		elseif DmFindPic('return.bmp',85,966,598,981,616) or DmFindPic('return1.bmp',85,966,597,980,616) then
 			click(x,y)
 		elseif DmFindPic('huanhang.bmp',85,967,593,985,609)	then
 			click(x,y)
 		--键盘弹起
-		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) or DmFindPic('diqiu1.bmp',85,152,596,167,613) then--975,601
 			click(x+796,y+5)			
 		--电池启动
 		elseif DmFindPic('dianchi.bmp',85,20,68,31,77) then
-			run()	start=os.time()
+			run()	
 		else
 			mSleep(500)
 		end
@@ -239,10 +241,19 @@ end
 function zhuxian()
 	jdwlLog('主线任务')
 	local clktime=os.time()
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
+		elseif os.difftime(os.time(),start)	> 240 and DmFindPic('beibao.bmp',85,846,614,858,626)==false then
+			kill()
+			jdwlLog("主线任务超时")
+			clktime=os.time()
+			start=os.time()
+		--世界地图打开了
+		elseif DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then	
+			click(x,y)mSleep(1000)
 		--接受领取任务
 		elseif DmFindPic('lingqu.bmp',85,859,475,870,488) then
 			click(x,y)
@@ -258,6 +269,9 @@ function zhuxian()
 		--背包满了
 		elseif DmFindPic('beibaoman.bmp',80,919,292,932,305) or DmFindPic('beibaoman1.bmp',80,932,295,942,305) then
 			beibao()
+		--任务卡顿之后对话框
+		elseif DmFindPic('lingqu.bmp',85,859,475,870,488)==false and DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
+			click(x,y)			
 		--自动寻路/自动战斗
 		elseif (DmFindPic('zidongxunlu.bmp',85,499,163,508,171) or DmFindPic('zidongzhandou.bmp',85,503,161,510,169)) and os.difftime(os.time(),clktime) <20 then
 			mSleep(2000)
@@ -275,10 +289,12 @@ function zhuxian()
 			if DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
 				click(x,y)
 			end
+			start=os.time()
 		--点击主线任务
 		elseif isMoveing()==false and DmFindPicFuzzy('1zhuan.bmp',90,10,232,36,249,0xffffff)==false and DmFindPic('beibao.bmp',85,846,614,858,626) and DmFindPicFuzzy('zhuxian.bmp',90,10,200,33,226,0xffffff) then
 			click(33,256)
 			clktime=os.time()
+			start=os.time()
 		--主线任务暂时断掉
 		elseif isMoveing() == false and (DmFindPicFuzzy('richang.bmp',90,99,301,117,322,0xffffff) or DmFindPicFuzzy('richang1.bmp',90,9,302,27,322,0xffffff)) and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			click(100,326)
@@ -286,12 +302,12 @@ function zhuxian()
 		--手指对话框
 		elseif DmFindPic('shouzhi.bmp',85,564,527,581,541) then
 			click(1057,565)
+		elseif DmFindPic("shouzhi1.bmp",85,565,530,580,542) then
+			click(1057,565)
 		--黄字转生
 --[[		elseif DmFindPic('huangzhuansheng.bmp',80,410,436,423,446) then
 			click(x,y)--]]
-		--任务卡顿之后对话框
-		elseif DmFindPic('lingqu.bmp',85,859,475,870,488)==false and DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
-			click(x,y)
+
 		--翅膀跳过
 		elseif DmFindPic('tiaoguocb.bmp',85,970,567,975,579) then
 			click(x,y)
@@ -300,7 +316,7 @@ function zhuxian()
 			click(x,y)			
 		--佩戴翅膀
 		elseif DmFindPic('peidaicb.bmp',85,541,333,554,343) then
-			click(x,y)
+			click(x,y)mSleep(1000)
 		--翅膀佩戴完成
 		elseif DmFindPic('xiexia.bmp',85,577,331,593,339) and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
 			click(x,y)
@@ -329,7 +345,7 @@ function zhuxian()
 			click(x,y)
 		--日常任务完成
 		elseif DmFindPic('richangwancheng.bmp',85,724,583,734,593) then
-			click(x,y)
+			click(x,y)			
 		else
 			mSleep(300)
 			connect()
@@ -409,7 +425,7 @@ function guzhanchang()
 			break
 		--地图倒三角
 		elseif DmFindPic('daosanjiao.bmp',85,1113,23,1125,32) then
-			click(x,y)
+			click(x,y)mSleep(1000)
 		--背包满了
 		elseif DmFindPic('beibaoman.bmp',80,919,292,932,305) or DmFindPic('beibaoman1.bmp',80,932,295,942,305) then
 			beibao()			
@@ -471,42 +487,49 @@ function emgc()
 	local isboss = 0
 	local bosstime=os.time()
 	local start=os.time()
+	local cs=os.time()
 	while true do
 		local sj,ms=emtime()
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
-			click(x,y)		
+			click(x,y)		cs=os.time()
 		--领取恶魔广场奖励
 		elseif DmFindPic('lingqujiangli.bmp',85,524,570,538,581) then
-			click(x,y)			
+			click(x,y)		 cs=os.time()	
 		--进入恶魔广场	
 		elseif ((sj>=15 and sj <17) or (sj>=45 and sj<47)) and DmFindPic('fbxx.bmp',85,996,21,1012,30)==false and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jinru()
 			isguwu = os.time()
 			isboss=0
 			bosstime=0
+			cs=os.time()
 		--点击鼓舞	
 		elseif os.difftime(os.time(),isguwu) > 122 and DmFindPic('guwu.bmp',85,950,351,960,360) then
 			click(x,y)
+			cs=os.time()
 		--鼓舞确定
 		elseif DmFindPic('guwuqueding.bmp',85,548,421,562,431) then
 			click(x,y)
 			isguwu = os.time()
+			cs=os.time()
 		--鼓舞还有
 		elseif DmFindPic('guwuquxiao.bmp',85,635,394,646,409) then
-			click(x,y)			
+			click(x,y)	
+			cs=os.time()		
 		elseif isboss==0 and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
 			click(x,y)
 			isguwu=os.time()
-		elseif isboss == 1 and 	DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('quxiaoguaji.bmp',85,961,453,972,462) then
+			cs=os.time()
+		elseif isboss == 1 and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('quxiaoguaji.bmp',85,961,453,972,462) then
 			local wait=0
 			bosstime=os.time()
 			for wait = 1,5 do
 				mSleep(1000)
 			end
-			if DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
+			if DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('quxiaoguaji.bmp',85,961,453,972,462) then
 				click(x,y)
-			end			
+			end		
+			cs=os.time()	
 		elseif isboss == 1 and DmFindPic('fbxx.bmp',85,996,21,1012,30) then
 			--释放技能
 			if DmFindPic('diyihuo.bmp',85,1065,352,1075,362) or DmFindPic('jiguang.bmp',85,1066,447,1078,459) or DmFindPic('heilongbo.bmp',85,952,559,963,570) then
@@ -518,10 +541,11 @@ function emgc()
 				quanquan(500)
 				bosstime = bosstime - 10
 			end	
+			cs=os.time()
 		--巴洛克出现
 		elseif DmFindPic('baluoke.bmp',85,339,48,357,62) then	
 			isboss = 1
-
+			cs=os.time()
 		--判断是否还有次数
 		elseif os.difftime(os.time(),start) > 60 and DmFindPic('fbxx.bmp',85,996,21,1012,30)==false and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			if jinru()==false then
@@ -530,9 +554,20 @@ function emgc()
 			end
 			start = os.time()
 			isboss = 0
+			cs=os.time()
 		--进恶魔点到	地图
-		elseif DmFindPic('emo.bmp',85,533,43,544,57) and DmFindPic('x_ditu.bmp',85,1090,41,1100,54) then
-			click(x,y)	mSleep(500)	
+		elseif DmFindPic('emo.bmp',85,576,49,589,60) and DmFindPic('x_em.bmp',85,1088,41,1103,52) then
+			click(x,y)	mSleep(500)
+			cs=os.time()	
+		--超时
+		elseif os.difftime(os.time(),cs)> 180 then
+			kill()
+			jdwlLog("恶魔广场超时")
+			isguwu = 0
+			isboss = 0
+			bosstime=os.time()
+			start=os.time()
+			cs=os.time()
 		else
 			mSleep(300)
 			connect()
@@ -660,6 +695,7 @@ function goumai()
 	local cnt=0
 	local isok=0
 	local start=os.time()
+	local sctime=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
@@ -667,6 +703,13 @@ function goumai()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('恶魔凭证购买完成')
 			break
+		elseif os.difftime(os.time(),start) > 180 then
+			kill()
+			jdwlLog("购买恶魔凭证超时")
+			count=0
+			nt=0
+			isok=0
+			start=os.time()
 		elseif isok==1 and DmFindPic('x_shangcheng.bmp',85,1092,35,1104,47) then
 			click(x,y)
 		--如果还停留在恶魔进入界面则关闭
@@ -681,6 +724,9 @@ function goumai()
 		--绑钻前往
 		elseif DmFindPic('bangzuanqianwang.bmp',85,964,392,974,402) then
 			click(x,y)		
+		elseif os.difftime(os.time(),sctime) > 30 and DmFindPic('x_shangcheng.bmp',85,1092,35,1104,47) then
+			click(x,y)
+			sctime=os.time()			
 		--商店绑钻类未选中
 		elseif DmFindPic('huibangzuan.bmp',85,829,101,850,114) then
 			click(x,y)			
@@ -701,9 +747,9 @@ function goumai()
 			click(x,y)
 			cnt=cnt+1
 			isok=1
-		elseif os.difftime(os.time(),start) > 30 and DmFindPic('x_shangcheng.bmp',85,1092,35,1104,47) then
-			click(x,y)
-			start=os.time()
+		--购买恶魔凭证灰关闭窗口
+		elseif DmFindPic('x_heishangcheng.bmp',85,1094,33,1109,48) then
+			click(x,y)			
 		else
 			mSleep(300)
 			connect()
@@ -715,17 +761,22 @@ end
 function bingfenggu()
 	jdwlLog('前往冰风谷')
 	local isok=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)
+		elseif os.difftime(os.time(),start) > 180 then
+			kill()
+			jdwlLog("前往冰风谷超时")
+			start=os.time()
 		--到冰风谷了                                                               
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('到达冰风谷')
 			break		
 		--地图倒三角
 		elseif DmFindPic('daosanjiao.bmp',85,1113,23,1125,32) then
-			click(x,y)
+			click(x,y)mSleep(1000)
 		--到达冰风谷
 		elseif DmFindPic('bingfenggu.bmp',85,1002,17,1018,33) then
 			isok=1
@@ -735,13 +786,13 @@ function bingfenggu()
 						--关闭地图
 			local tt=os.time()
 			while os.difftime(os.time(),tt) <3 do
-				if DmFindPic('x_ditu.bmp',85,1090,41,1100,54) then
+				if DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then
 					click(x,y)
 				end
 			end
 		--打开地图
 		elseif DmFindPic('beibao.bmp',85,846,614,858,626) and DmFindPic('sanjiao.bmp',85,1112,20,1120,33) then
-			click(1039,120)
+			click(1039,120)mSleep(1000)
 		--点击世界地图
 		elseif DmFindPic('sjdt.bmp',85,92,103,111,123) then
 			click(x,y)
@@ -760,23 +811,30 @@ function bubangding()
 	local isok=0
 	local start=os.time()
 	local you=0
-	local meiyou=0
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
-			click(x,y)		
+			click(x,y)	
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('判断背包是否有东西完成')
-			break	
+			return you
+		elseif isok==1 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+			click(x,y)
 		--打开背包
 		elseif DmFindPic('beibao.bmp',85,846,614,858,626) then		
 			click(x,y)
 		elseif DmFindPic('zhengli.bmp',85,1010,586,1023,597) then
 			notifyMsg('开始检查背包')mSleep(2000)
-			if xunzhao() then
-				notifyMsg('有东西')
-				you=1
+			local  tt=os.time()
+			while os.difftime(os.time(),tt) < 10 do
+				if xunzhao() then
+					notifyMsg('有东西')
+					you=1
+				elseif DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
+					click(x,y)
+				end
 			end
+			isok=1
 		else
 			mSleep(300)
 			connect()
@@ -789,18 +847,23 @@ function yaodian()
 	bingfenggu()
 	jdwlLog('前往勇者药店')
 	local isok=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
-			click(x,y)		
+			click(x,y)	
+		elseif os.difftime(os.time(),start)	> 180 then
+			kill()
+			start=os.time()
+			jdwlLog("前往勇者药店超时")
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('到达勇者药店')
 			break
-		elseif isok==1 and DmFindPic('x_ditu.bmp',85,1089,39,1102,50) then
+		elseif isok==1 and DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then
 			click(x,y)mSleep(500)
 		--地图倒三角
 		elseif DmFindPic('daosanjiao.bmp',85,1113,23,1125,32) then
-			click(x,y)	
+			click(x,y)	mSleep(1000)
 		--打开小地图找npc
 		elseif DmFindPic('bingfenggu.bmp',85,1002,17,1018,33) then
 			click(1039,120)
@@ -876,10 +939,20 @@ function jiaoyi()
 	local isdeal=0
 	local cnt=0
 	local fs=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)	
+		elseif os.difftime(os.time(),start) > 360 then
+			kill()
+			jdwlLog("交易超时")
+			isok=0
+			issay=0
+			isdeal=0
+			cnt=0
+			fs=0
+			start=os.time()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('交易完成')
 			break
@@ -888,6 +961,7 @@ function jiaoyi()
 		elseif fs > 20 and 	DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
 			fs=0
+			yaodian()
 			fanhuijuese()
 		--打开聊天
 		elseif DmFindPic('liaotian.bmp',85,751,590,777,601) then
@@ -928,7 +1002,7 @@ function jiaoyi()
 			end
 			
 		--键盘弹起
-		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) or DmFindPic('diqiu1.bmp',85,152,596,167,613) then--975,601
 			click(x+796,y+5)
 		else
 			mSleep(500)
@@ -968,7 +1042,21 @@ function fanhuijuese()
 			click(x,y)		
 		--电池启动
 		elseif DmFindPic('dianchi.bmp',85,20,68,31,77) then
-			run()							
+			run()	
+		--关闭福利
+		elseif DmFindPic('x_fuli.bmp',85,1092,44,1106,56) then
+			click(x,y)	
+		--什么鬼确定
+		elseif DmFindPic('smqueding.bmp',85,640,431,651,442) then
+				click(x,y)
+		--社么鬼确定
+		elseif DmFindPic('smgqueding.bmp',85,637,430,649,443)	 then
+				click(x,y)		
+		elseif DmFindPic('smqd.bmp',85,638,430,653,442) then
+			click(x,y)					
+		--登录界面进入游戏
+		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) then
+			click(x,y)							
 		else
 			mSleep(300)
 		end
@@ -1012,13 +1100,13 @@ function xunzhao()
 		--658,264,669,270
 		--x方向公差93
 		--y方向公差93
-		if find_Onequyu(0x9433B8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			return true
-		elseif find_Onequyu(0xA81B75,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		elseif find_Onequyu(0xA81B75,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			return true
-		elseif find_Onequyu(0x992398,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		elseif find_Onequyu(0x992398,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			return true
-		elseif find_Onequyu(0xAE31AE,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		elseif find_Onequyu(0xAE31AE,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			return true
 		else
 			wz=wz+1
@@ -1039,7 +1127,7 @@ function give()
 			click(x,y)	
 		end
 		--键盘弹起
-		if DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		if DmFindPic('diqiu.bmp',85,179,596,194,610) or DmFindPic('diqiu1.bmp',85,152,596,167,613) then--975,601
 			click(x+796,y+5)
 		end		
 		--遍历背包
@@ -1060,19 +1148,19 @@ function give()
 		--658,264,669,270
 		--x方向公差93
 		--y方向公差93
-		if find_Onequyu(0x9433B8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2
-		elseif find_Onequyu(0xA81B75,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		elseif find_Onequyu(0xA81B75,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2		
-		elseif find_Onequyu(0x992398,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		elseif find_Onequyu(0x992398,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2		
-		elseif find_Onequyu(0xAE31AE,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+		elseif find_Onequyu(0xAE31AE,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2		
@@ -1149,10 +1237,16 @@ function chibang()
 	jdwlLog('升级翅膀')
 	local isok=0
 	local isbuy=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)			
+		elseif os.difftime(os.time(),start)>180 then
+			kill()
+			jdwlLog("翅膀超时")
+			isok=0
+			start=os.time()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('升级翅膀完成')
 			break
@@ -1169,7 +1263,7 @@ function chibang()
 		elseif DmFindPic('zhengli.bmp',85,1010,586,1023,597) and DmFindPic('chibang.bmp',85,74,437,95,454) then
 			click(x,y)mSleep(3000)
 		--翅膀一阶需要购买火种
-		elseif isbuy==0 and DmFindPic('yijie.bmp',85,179,139,189,158) then
+		elseif isbuy==0 and DmFindPic('yijie.bmp',80,179,139,189,158) then
 			huozhong()
 			isbuy = 1
 		--自动提升
@@ -1196,10 +1290,16 @@ function huozhong()
 	local one=0
 	local three=0
 	local isbuy=0
+	local start=os.time()
+	local sctime=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
-			click(x,y)			
+			click(x,y)		
+		elseif os.difftime(os.time(),start)	> 120 then
+			kill()
+			jdwlLog("购买火种超时")
+			break
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('购买火种完成')
 			break
@@ -1241,6 +1341,9 @@ function huozhong()
 		elseif DmFindPic('goumai.bmp',85,742,459,757,474) then
 			click(x,y)
 			isbuy =1
+		elseif os.difftime(os.time(),sctime) > 30 and  DmFindPic('x_shangcheng.bmp',85,1092,35,1104,47) then
+			click(x,y)
+			sctime=os.time()
 		else
 			mSleep(500)
 			connect()
@@ -1254,10 +1357,18 @@ function hushenfu()
 	local isok=0
 	local dk=0
 	local yjdh=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
-			click(x,y)	
+			click(x,y)
+		elseif os.difftime(os.time(),start)	> 180 then
+			kill()
+			jdwlLog("护身符超时")
+			isok=0
+			dk=0
+			yjdh=0
+			start=os.time()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('兑换护身符完成')
 			break	
@@ -1298,10 +1409,15 @@ end
 function jineng()
 	jdwlLog('升级技能')
 	local isok=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435)or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
+		elseif os.difftime(os.time(),start) > 180 then
+			jdwlLog("升级技能超时")
+			kill()
+			start=os.time()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('升级技能完成')
 			break
@@ -1338,10 +1454,17 @@ function wuqi()
 	local isok=0
 	local isfr=0
 	local count=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435)or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)
+		elseif os.difftime(os.time(),start)>180 then
+			jdwlLog("强化武器超时")
+			isok=0
+			isfr=0
+			count=0
+			start=os.time()
 		--强化完成
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('强化武器完成')
@@ -1388,10 +1511,18 @@ function xianglian()
 	local isfr=0
 	local count=0
 	local cnt=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)
+		elseif os.difftime(os.time(),start)>180 then
+			kill()
+			jdwlLog("强化项链超时")
+			isfr=0
+			count=0
+			cnt=0
+			start=os.time()
 		--强化完成
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('强化项链完成')
@@ -1482,10 +1613,18 @@ function qifu()
 	local isok=0
 	local iscl=0
 	local count = 0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435)or DmFindPic('dx.bmp',85,519,422,530,438) then
-			click(x,y)	
+			click(x,y)
+		elseif os.difftime(os.time(),start)	>180 then
+			jdwlLog("祈福超时")
+			kill()
+			isok=0
+			iscl=0
+			count=0
+			start=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('祈福完成')
 			break	
@@ -1533,10 +1672,17 @@ function leiji()
 	jdwlLog('累计登陆')
 	local count=0
 	local isok=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
-			click(x,y)			
+			click(x,y)		
+		elseif os.difftime(os.time(),start)	 > 180 then
+			kill()
+			jdwlLog("累计登陆奖励超时")
+			isok=0
+			count=0
+			start=os.time()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('累计登陆奖励完成')
 			break
@@ -1563,6 +1709,9 @@ function leiji()
 		elseif DmFindPic('leijiliang.bmp',85,90,383,109,406) then
 			myMove_UD(921,583,919,388,10)mSleep(500)
 			count = count + 1
+		--领奖灰关闭窗口
+		elseif DmFindPic('x_heifuli.bmp',85,1096,40,1111,51) then
+			click(x,y)			
 		else
 			mSleep(500)
 			connect()
@@ -1575,10 +1724,16 @@ function dengji()
 	jdwlLog('等级奖励')
 	local isok=0
 	local count = 0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
-			click(x,y)			
+			click(x,y)		
+		elseif os.difftime(os.time(),start)	> 180 then
+			kill()
+			jdwlLog("等级奖励超时")
+			isok=0
+			count=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('等级奖励完成')
 			break
@@ -1604,6 +1759,9 @@ function dengji()
 		elseif DmFindPic('dengjiliang.bmp',85,103,246,124,269) then
 			myMove_UD(652,520,875,420,10)mSleep(1000)
 			count = count + 1
+		--领奖灰关闭窗口
+		elseif DmFindPic('x_heifuli.bmp',85,1096,40,1111,51) then
+			click(x,y)			
 		else
 			mSleep(500)
 			connect()
@@ -1650,10 +1808,15 @@ end
 function meiri()
 	jdwlLog('每日在线')
 	local isok=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
-			click(x,y)			
+			click(x,y)		
+		elseif os.difftime(os.time(),start)	> 180 then
+			jdwlLog("每日在线奖励超时")
+			start=os.time()
+			isok=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('每日在线完成')
 			break
@@ -1674,6 +1837,9 @@ function meiri()
 		--每日在线已经领取
 		elseif DmFindPic('meiriok.bmp',85,383,369,396,380) then
 			isok=1
+		--领奖灰关闭窗口
+		elseif DmFindPic('x_heifuli.bmp',85,1096,40,1111,51) then
+			click(x,y)			
 		else
 			mSleep(500)
 			connect()
@@ -1743,10 +1909,10 @@ function connect()
 		click(x,y)		
 	--什么鬼确定
 	elseif DmFindPic('smqueding.bmp',85,640,431,651,442) then
-			click(x,y)
+		click(x,y)
 	--社么鬼确定
 	elseif DmFindPic('smgqueding.bmp',85,637,430,649,443)	 then
-			click(x,y)		
+		click(x,y)		
 	elseif DmFindPic('smqd.bmp',85,638,430,653,442) then
 		click(x,y)					
 	--登录界面进入游戏
@@ -1764,10 +1930,17 @@ function tuichu()
 	jdwlLog('退出游戏')
 	local shuru=0
 	local cuowu=0
+	local start=os.time()
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)			
+		elseif os.difftime(os.time(),start) > 180 then
+			kill()
+			jdwlLog("退出超时")
+			shuru=0
+			cuowu=0
+			start=os.time()
 		--没角色了
 		elseif DmFindPic('meijuese.bmp',85,115,217,131,233) and DmFindPic('juesejinru.bmp',85,519,572,532,583) then
 			jdwlLog('退出完成')
@@ -1828,12 +2001,12 @@ function tuichu()
 				inputText(code)
 			--end
 		--键盘弹起
-		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) then--975,601
+		elseif DmFindPic('diqiu.bmp',85,179,596,194,610) or DmFindPic('diqiu1.bmp',85,152,596,167,613) then--975,601
 			click(x+796,y+5)	
 			shuru=1		
 		else
 			mSleep(500)
-			--connect()
+			connect()
 		end
 	end
 end
@@ -1847,6 +2020,11 @@ function beibao(purple)
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435)or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)		
+		elseif os.difftime(os.time(),start)>180 then
+			jdwlLog("整理背包超时")
+			kill()
+			start=os.time()
+			count=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('整理背包完成')
 			break
@@ -1897,6 +2075,7 @@ function shiyong()
 	local b = 0
 	local wz = 1
 	local isok=0	
+	local start=os.time()
 	while true do
 		mSleep(200)
 		if wz <= 5 then
@@ -1915,6 +2094,14 @@ function shiyong()
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)	
+		elseif os.difftime(os.time(),start) > 180 then
+			kill()
+			jdwlLog("使用物品超时")
+			start=os.time()
+			a=0
+			b=0
+			wz=0
+			isok=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('使用物品完成')
 			break
