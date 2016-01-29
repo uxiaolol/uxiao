@@ -96,6 +96,7 @@ function richang()
 		four = 0
 		five = 0	
 		denglu()--登录游戏
+		zawu()
 		levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
 		fuli()
 		zawu()
@@ -117,6 +118,10 @@ function richang()
 		shiyongbaotu()
 		--学习技能
 		huoli()
+		--建造家园
+		jiayuan()
+		--回家
+		huijia()
 		--做药
 		zhiyao()
 		--福利
@@ -320,6 +325,7 @@ function levelup()
 	local zhuxian=0
 	local count=0
 	local start=os.time()
+	local cnt=0
 	while true do
 		--主线任务超时
 		if os.difftime(os.time(),start) > 240 then
@@ -330,6 +336,8 @@ function levelup()
 			zhuxian=0
 			count=0
 			start=os.time()
+		elseif DmFindPic('choujiang.bmp',85,572,316,585,330) then
+			click(x,y)
 		--新手礼包
 		elseif DmFindPic('xinshoulibao.bmp',85,956,464,969,480) then
 			click(974,515)
@@ -359,13 +367,16 @@ function levelup()
 		--使用
 		elseif DmFindPic('shiyong.bmp',85,982,508,995,521) then
 			click(x,y)mSleep(1500) start = os.time()
+		--红尘选择宝宝
+		elseif DmFindPic("xuanzhe.bmp",85,513,122,536,145) then--428,303
+			click(x+85,y+181)
 		--到40级开启新剧情
 		elseif DmFindPicFuzzy('40.bmp',95,967,205,1007,224,0xffffff) and DmFindPicFuzzy('jueseshengji.bmp',95,993,168,1018,196,0xffffff) then
 			notifyMsg('到达40级开启新剧情')
 			jdwlLog('到达40级开启新剧情')
 			break
 		--生死薄
-		elseif DmFindPic('shengsibu.bmp',80,910,292,928,313) then
+		elseif DmFindPic('shengsibu.bmp',80,910,292,928,313) or DmFindPic("pa.bmp",80,1040,292,1062,314) then
 			notifyMsg('生死薄')
 			jdwlLog('生死薄')
 			break
@@ -399,10 +410,14 @@ function levelup()
 		--技能升级
 		elseif DmFindPic('dianjishengji.bmp',85,885,515,897,524) then
 			click(894,569) start = os.time()
+		elseif cnt>3 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
+			jdwlLog("主线完成：可以做帮派任务了")
+			break
 		--帮派任务都出来了
 		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and DmFindPicFuzzy('xuanwu.bmp',90,920,163,982,452,0xffffff) or DmFindPicFuzzy('zhuque.bmp',90,920,163,982,452,0xffffff) or DmFindPicFuzzy('qinglong.bmp',90,920,163,982,452,0xffffff) and isMoveing()==false	then
 			jdwlLog("主线任务完成了")
-			break
+			cnt=cnt+1
+			mSleep(1000)
 		--角色升级
 		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and DmFindPicFuzzy('jueseshengji.bmp',95,993,168,1018,196,0xffffff) and DmFindPicFuzzy('shimen.bmp',90,926,256,951,280,0xffffff) and  isMoveing() == false then
 			click(971,281)
@@ -541,6 +556,8 @@ function shimen()
 			logDebug('师门完成')
 			one = 1
 			break
+		elseif DmFindPic('choujiang.bmp',85,572,316,585,330) then
+			click(x,y)
 		--使用
 		elseif DmFindPic('shiyong.bmp',85,982,508,995,521) then
 			click(x,y)			
@@ -1285,11 +1302,32 @@ function bangpairenwu()
 			dianji = 0
 			start = os.time()
 		--帮派购买
-		elseif DmFindPic('goumaibingqi.bmp',85,831,511,845,525) then
+		elseif DmFindPic('goumaibingqi.bmp',85,831,511,845,525) or DmFindPic("goumaibaoshi.bmp",85,806,569,821,580) then
 			click(x,y)		
 			count = 0
 			dianji = 0
 			start = os.time()
+		--购买摆摊物品
+		elseif DmFindPic('pengren.bmp',85,351,158,363,168) then
+			click(x,y) start = os.time()
+		elseif DmFindPic('pengren1.bmp',85,352,157,364,171) and DmFindPic('goumaipengren.bmp',85,847,566,860,582) then
+			click(x,y) start = os.time()
+		--师门购买兵器
+		elseif DmFindPic('goumaibingqi.bmp',85,831,511,845,525) then
+			click(x,y) start = os.time()
+		--师门购买宠物
+		elseif DmFindPic('goumaichongwu.bmp',85,886,568,900,580) then
+			click(x,y)mSleep(500)
+			closewin() start = os.time()
+		--上交任务物品/任务物品选择
+		elseif DmFindPic('wupingxuanze.bmp',85,926,517,937,525) then
+			click(x,y) start = os.time()
+		--上交兵器
+		elseif DmFindPic('shangjiaobingqi.bmp',85,943,512,954,523) then
+			click(x,y) start = os.time()
+		--上交宠物
+		elseif DmFindPic('shangjiaochongwu.bmp',85,740,520,754,531) then
+			click(x,y)		 start = os.time()				
 		--开场动画跳过剧情
 		elseif DmFindPicFuzzy('tiaoguojuqing.bmp',95,1093,29,1121,51,0xffffff) then
 			click(x,y) start = os.time()
@@ -1409,12 +1447,14 @@ end
 function tihuan()
 	jdwlLog('替换玉面狐狸')
 	local sppick=0
+	local wz=0
 	local tt=os.time()
 	while true do
 		if os.difftime(os.time(),tt) > 180 then
 			jdwlLog('替换玉面狐狸超时')
 			kill()
 			sppick=0
+			wz=0
 			tt=os.time()
 		--替换完成
 		elseif sppick == 1 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
@@ -1439,9 +1479,13 @@ function tihuan()
 		--上阵玉面狐狸
 		elseif DmFindPic('shang.bmp',85,182,264,192,272) then
 			click(x,y)
+		elseif wz==1 and DmFindPic('shang.bmp',85,182,264,192,272)==false and  DmFindPic('wuzhen.bmp',85,909,112,920,126) then
+			sppick=1
+			closewin()
 		--点击第四栏
 		elseif DmFindPic('wuzhen.bmp',85,909,112,920,126) then--946,203
 			click(x+40,y+90)
+			wz=1
 		else
 			mSleep(500)
 			connect()
@@ -1524,7 +1568,7 @@ function jiarubp()
 		elseif DmFindPic('heibeibao.bmp',85,1082,494,1093,506) then
 			click(x,y)			
 		--点击菜单栏帮派
-		elseif DmFindPic('bangpai.bmp',85,839,595,849,608) then
+		elseif DmFindPic('bangpai.bmp',85,839,595,849,608) or DmFindPic("bangpai1.bmp",85,757,594,768,603) then
 			click(x,y)
 		--一键申请
 		elseif DmFindPic('yijianshenqing.bmp',85,831,316,844,328) then
@@ -1951,6 +1995,7 @@ function zhiyao()
 			count = 0
 			kill()
 			tt=os.time()
+			break
 		elseif isok == 1 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
 			jdwlLog('制药完成')
 			break		
@@ -1980,7 +2025,7 @@ function zhiyao()
 		elseif DmFindPic('dakailianyao.bmp',85,745,551,757,563) and isok==0 then
 			click(x,y)
 		--活力不够无法炼药
-		elseif DmFindPic('wufa.bmp',85,594,292,606,305) then
+		elseif DmFindPic('wufa.bmp',85,594,292,606,305) or DmFindPic("wufa2.bmp",80,499,292,513,310) then
 			notifyMsg('活力不够无法炼药')
 			isok = 1
 		--金币不够无法炼药
@@ -2321,7 +2366,7 @@ function chushou()
 			count = count + 1
 		--点击要出售的物品
 		elseif DmFindPic('yaoping.bmp',80,665,150,676,161) or DmFindPic('wuping.bmp',80,663,148,678,164) or DmFindPic('wuping1.bmp',85,669,149,680,156) then--701,190
-			click(x+35,y+40)
+			click(x+35,y+40)mSleep(2000)
 		--当前商品没有其他玩家出售
 		elseif DmFindPic('meiyou.bmp',85,667,263,686,284) and DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
 			click(x,y)
@@ -2368,9 +2413,9 @@ function chushou()
 					if a==shiji then
 						equal = 1
 					elseif a <shiji then
-						jian = 1
+						jia = 1
 					elseif a > shiji then
-						jia=1
+						jian=1
 					end
 			elseif string.len(tostring(can)) < string.len(tostring(shiji)) then
 					local a,b
@@ -2491,6 +2536,107 @@ function cankao()
 	return jiage
 end
 
+--建造家园
+function jiayuan()
+	jdwlLog("建造家园")
+	local rw=0
+	local count=0
+	while true do
+		--购买摆摊物品
+		if DmFindPic('pengren.bmp',85,351,158,363,168) then
+			click(x,y) 
+		elseif DmFindPic('pengren1.bmp',85,352,157,364,171) and DmFindPic('goumaipengren.bmp',85,847,566,860,582) then
+			click(x,y) 
+		elseif count>5 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
+			jdwlLog("建造家园完成")
+			break
+		elseif DmFindPic('jineng.bmp',85,918,586,929,597) and (DmFindPic("jiayuan.bmp",85,837,586,849,595)==false or DmFindPic("jiayuan1.bmp",85,838,596,849,605)==false) then
+			jdwlLog("未达到条件")
+			break
+		--点击家园
+		elseif rw==0 and DmFindPic("jiayuan.bmp",85,837,586,849,595) or DmFindPic("jiayuan1.bmp",85,838,596,849,605) then
+			click(x,y)			
+		--房屋建造任务
+		elseif isMoveing()==false and DmFindPicFuzzy("wu.bmp",85,920,161,980,453,0xffffff) then
+			click(x,y)
+			rw=1
+		--建设
+		elseif DmFindPic("gou1.bmp",85,670,334,685,347) and DmFindPic("gou2.bmp",85,472,475,483,491) and DmFindPic("jianshe.bmp",85,797,566,811,579) then
+			click(x,y)
+		--最便宜的房子
+		elseif DmFindPic("minzhai.bmp",85,358,205,374,221) then
+			click(x,y)
+		--分配
+		elseif DmFindPic("fenpei.bmp",85,751,503,762,518) then
+			click(x,y)
+		--高级丹方
+		elseif DmFindPic("dan.bmp",85,256,310,274,329) and DmFindPic("gaojixuanxiang.bmp",85,668,330,681,344) then
+			click(x,y)
+		--用人普通
+		elseif DmFindPic("yongren.bmp",85,259,455,274,472) and DmFindPic("putong.bmp",85,467,476,481,490) then
+			click(x,y)
+		--我要建房
+		elseif DmFindPic("jianfang.bmp",85,995,415,1010,430) then
+			click(x,y)
+		--点击菜单栏
+		elseif rw==0 and DmFindPic('caidan.bmp',85,1077,591,1085,600) then
+			click(x,y)mSleep(1000)
+		--对话框遮挡住菜单栏
+		elseif DmFindPic('heibeibao.bmp',85,1082,494,1093,506) then
+			click(x,y)	
+		--无家的浪子
+		elseif DmFindPic("wujia.bmp",85,389,279,404,297) then--665,386
+			click(x+276,y+107)
+		--师门购买宠物
+		elseif DmFindPic('goumaichongwu.bmp',85,886,568,900,580) then
+			click(x,y)			
+		--上交任务物品/任务物品选择
+		elseif DmFindPic('wupingxuanze.bmp',85,926,517,937,525) then
+			click(x,y) 
+		--上交兵器
+		elseif DmFindPic('shangjiaobingqi.bmp',85,943,512,954,523) then
+			click(x,y)
+		--上交宠物
+		elseif DmFindPic('shangjiaochongwu.bmp',85,740,520,754,531) then
+			click(x,y)	
+		elseif DmFindPic("x_jiayuan.bmp",85,883,67,894,79) then
+			click(x,y)
+			count=6
+		elseif DmFindPic('baoguo.bmp',85,1086,522,1099,533) and DmFindPicFuzzy("wu.bmp",85,920,161,980,453,0xffffff) ==false then
+			count=count+1
+			mSleep(1000)						
+		else
+			mSleep(300)
+			connect()
+		end				
+	end
+end
+
+--回家制药
+function huijia()
+	jdwlLog("回家制药")
+	while true do
+		if DmFindPic("putongtingyuan.bmp",80,102,28,121,50) then
+			jdwlLog("回家成功")
+			break
+		elseif DmFindPic('jineng.bmp',85,918,586,929,597) and (DmFindPic("jiayuan.bmp",85,837,586,849,595)==false or DmFindPic("jiayuan1.bmp",85,838,596,849,605)==false) then
+			jdwlLog("回家制药未达到条件")
+			break			
+		elseif DmFindPic("jiayuan.bmp",85,837,586,849,595) or DmFindPic("jiayuan1.bmp",85,838,596,849,605) then
+			click(x,y)			
+		elseif DmFindPic('caidan.bmp',85,1077,591,1085,600) then
+			click(x,y)mSleep(1000)
+		--对话框遮挡住菜单栏
+		elseif DmFindPic('heibeibao.bmp',85,1082,494,1093,506) then
+			click(x,y)	
+		elseif DmFindPic("huijia.bmp",85,510,534,521,546) then
+			click(x,y)mSleep(3000)
+		else
+			mSleep(300)
+			connect()
+		end
+	end
+end
 
 --退出游戏
 function exit()
@@ -2510,7 +2656,7 @@ function exit()
 		elseif DmFindPic('heibeibao.bmp',85,1082,494,1093,506) then
 			click(x,y)	
 		--系统
-		elseif DmFindPic('xitong.bmp',85,754,589,766,599) then
+		elseif DmFindPic('xitong.bmp',85,754,589,766,599) or DmFindPic("xitong1.bmp",85,672,591,681,602) then
 			click(x,y)
 		--切换账号
 		elseif DmFindPic('qiehuanzhanghao.bmp',85,374,515,389,525) then
@@ -2596,6 +2742,11 @@ function connect()
 	--游戏更新点击确定
 	if DmFindPic('youxigengxin.bmp',85,389,281,405,292) then--567,385
 		click(x+180,y+100)
+	--抽奖
+	elseif DmFindPic('choujiang.bmp',85,572,316,585,330) then
+		click(x,y)		
+	elseif DmFindPic("zaijiezaili.bmp",85,492,141,518,153) then
+		click(x,y)
 	--重连失败
 	elseif DmFindPic('chonglianshibai.bmp',85,463,293,481,306) then--619,370
 		click(x+160,y+80)
@@ -2907,8 +3058,8 @@ end
 
 
 function routerControl(deviceId,url)
-	--local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
-	local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	local data = httpGet('http://192.168.240.122:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
+	--local data = httpGet('http://192.168.1.200:8080/makemoney/android/ad/router?action=control&sn='..getDeviceID()..'&url='..url)
 	local i,j = string.find(data,'ok')
 	if i~=nil and j~=nil then
 		notifyMessage('断网请求成功')
@@ -2945,7 +3096,7 @@ function iGrimace()
 	local isnew = 0
 	while true do
 		if isnew == 0 and Mulcolor(letter_n,90,146,409,151,511) and Mulcolor(new_iphone,90,823,87,829,90) then
-			click(x,y)mSleep(5000)
+			click(x,y)mSleep(8000)
 			isnew = 1
 		elseif isnew == 1 and Mulcolor(icon_exit,90,945,157,950,161) then
 			click(x,y)

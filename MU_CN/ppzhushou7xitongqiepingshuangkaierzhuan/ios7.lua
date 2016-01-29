@@ -1609,7 +1609,7 @@ function allow()
 --[[			return 0--]]
 		elseif DmFindPic('huodong.bmp',85,732,151,746,159) == false and DmFindPic('bag.bmp',90,831,615,842,628) and DmFindPic('head.bmp',85,10,50,21,60) then	
 			click(x,y)
-		elseif DmFindPic('dahuodong.bmp',90,593,46,607,60) and DmFindPic('guzc.bmp',85,115,398,134,413) then
+		elseif DmFindPic('dahuodong.bmp',90,593,46,607,60) and DmFindPic('guzc.bmp',85,62,388,83,408) then
 			click(x,y)
 			count = count + 1
 		--立即进入，两个都可以进
@@ -1830,7 +1830,7 @@ function battle()
 				DmFindPic('bag.bmp',90,831,615,842,628) and 
 				DmFindPic('head.bmp',85,10,50,21,60) then	
 			click(x,y)mSleep(1000)
-		elseif DmFindPic('dahuodong.bmp',90,593,46,607,60) and DmFindPic('guzc.bmp',85,115,398,134,413) then
+		elseif DmFindPic('dahuodong.bmp',90,593,46,607,60) and DmFindPic('guzc.bmp',85,62,388,83,408) then
 			click(x,y)
 		--立即进入
 		elseif DmFindPic('chang.bmp',90,116,395,134,412) and DmFindPic('dahuodong.bmp',90,593,46,607,60) and DmFindPic('jinguzc.bmp',90,965,582,975,598) then
