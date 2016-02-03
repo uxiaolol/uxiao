@@ -282,8 +282,8 @@ function denglu()
 		elseif DmFindPic('datang.bmp',85,926,314,937,327) then
 			click(x,y)
 		--输入名字
-		elseif DmFindPic('mingzi.bmp',85,1010,468,1022,486) then--1069,477
-			click(x+50,y+10)
+		elseif DmFindPic('mingzi.bmp',85,1010,468,1022,486) or DmFindPic("mingzi1.bmp",85,989,474,1002,487) then--1069,477
+			click(1061,482)
 		--名字重复
 		elseif DmFindPic('mingzichongfu.bmp',85,475,292,494,313) then--570,373
 			click(x+100,y+80)mSleep(500)
@@ -297,7 +297,7 @@ function denglu()
 				end
 			end
 		--进入游戏
-		elseif DmFindPic('jinruyouxi.bmp',85,892,555,907,569) then
+		elseif DmFindPic('jinruyouxi.bmp',85,892,555,907,569) or DmFindPic("jinruyouxi1.bmp",85,890,559,906,571) then
 			click(x,y)
 		--登录/角色创建完毕
 		elseif DmFindPic('touxiang.bmp',85,1093,39,1104,48) then
