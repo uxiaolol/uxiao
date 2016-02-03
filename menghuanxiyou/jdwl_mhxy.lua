@@ -98,11 +98,10 @@ function richang()
 		four = 0
 		five = 0	
 		denglu()--登录游戏
-		zawu()
-		fangsheng()
 		levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
 		fuli()
 		zawu()
+		fangsheng()
 		--加帮派
 		jiarubp()
 		--领双
