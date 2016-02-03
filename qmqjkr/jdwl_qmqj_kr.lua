@@ -189,6 +189,10 @@ function denglu()
 		--不允许通知 
 		elseif DmFindPic("buyunxu.bmp",85,387,430,420,462)	 then
 			click(x,y)
+		--没有网络重启
+		elseif DmFindPic("nowifi.bmp",85,404,270,427,291) and DmFindPic("nowifiqueding.bmp",85,634,428,649,440) then
+			click(x,y)
+			os.execute("reboot")
 		--名字有问题
 		elseif DmFindPic('chuangjian.bmp',85,888,567,901,581) and DmFindPic('mingziqueding.bmp',85,638,431,649,442) then
 			click(x,y)mSleep(1000)
@@ -372,6 +376,8 @@ function zhuxian()
 		--背包满了
 		elseif DmFindPic('beibaoman.bmp',80,919,292,932,305) or DmFindPic('beibaoman1.bmp',80,932,295,942,305) then
 			beibao()
+		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) and DmFindPic("huangzi.bmp",80,505,372,521,389) then
+			click(x+5,y+5)
 		--任务卡顿之后对话框
 		elseif DmFindPic('lingqu.bmp',85,859,475,870,488)==false and DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
 			click(x,y)			
