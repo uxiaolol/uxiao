@@ -317,7 +317,10 @@ function denglu()
 			os.execute("reboot")
 		--关闭福利	
 		elseif DmFindPic('x_fulia.bmp',85,958,73,973,84) then
-			click(x,y)			
+			click(x,y)	
+		--福袋
+		elseif DmFindPic("fudai.bmp",85,538,405,553,418) then
+			click(x,y)					
 		else
 			mSleep(500)
 			connect()
@@ -334,6 +337,7 @@ function levelup()
 	local count=0
 	local start=os.time()
 	local cnt=0
+	local shibai=0
 	while true do
 		--主线任务超时
 		if os.difftime(os.time(),start) > 240 then
@@ -532,6 +536,13 @@ function levelup()
 		--战斗界面
 		elseif DmFindPic('aixin.bmp',85,25,39,36,50) then
 			start = os.time()
+		elseif shibai>2 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
+			jdwlLog("主线任务打不过")
+			shibai=0
+			break
+		elseif DmFindPic("zaijiezaili.bmp",85,492,141,518,153) then
+			click(x,y)	
+			shibai=shibai+1
 		else
 			mSleep(500)
 			connect()
@@ -783,6 +794,7 @@ function fengyao()
 	local isok=0
 	local cnt=0
 	local start=os.time()
+	local count=0
 	while true do
 		--封妖超时
 		if isMoveing() == false and os.difftime(os.time(),start) > 300 then
@@ -848,9 +860,13 @@ function fengyao()
 			location[2]=y+40
 			location[3]=x+151
 			location[4]=y+60
+		elseif count > 3 and DmFindPic('richangrenwu1.bmp',85,157,106,177,129) and DmFindPic('fengyao.bmp',80,284,88,1009,452)==false	then
+			count=0
+			closewin()
 		elseif DmFindPic('richangrenwu1.bmp',85,157,106,177,129) and DmFindPic('fengyao.bmp',80,284,88,1009,452)==false then	
 			myMove_UD(989,391,989,295,10)
 			start = os.time()
+			count = count + 1
 		--进入战斗
 		elseif DmFindPic('jinruzhandou.bmp',85,921,414,941,430) then
 			click(x,y)mSleep(1000)
@@ -888,6 +904,9 @@ function fengyao()
 			click(x+439,y+17)
 			ispart=0
 			move=0
+		--人物技能/商城/指引/宠物/背包/技能/强化		
+		elseif DmFindPic('x_renwujineng.bmp',85,973,42,986,54) then
+			click(x,y)			
 		else
 			mSleep(500)
 			connect()
@@ -920,6 +939,9 @@ function mijing()
 			logDebug('秘境降妖完成')
 			five = 1
 			break	
+		elseif DmFindPic("lingci.bmp",85,749,97,760,114) then
+			isok=1
+			closewin()
 		--自动战斗
 		elseif DmFindPic('zidongzhandou.bmp',85,1100,605,1114,615) then
 			click(x,y)		 start = os.time()	
@@ -1074,7 +1096,7 @@ function ismj()
 			closewin()
 			cnt=0
 			start = os.time()
-			ret=0
+			ret=2
 		elseif cnt>3 and DmFindPic('richangrenwu1.bmp',85,157,106,177,129) then
 			isok=1
 			cnt=0
@@ -3055,6 +3077,15 @@ function connect()
 	--红色提示
 	elseif DmFindPic("jiahao.bmp",85,650,307,672,327) then--570,414
 		click(x-80,y+107)
+	--福袋
+	elseif DmFindPic("fudai.bmp",85,538,405,553,418) then
+		click(x,y)
+	--限时折扣
+	elseif DmFindPic("guanbizhekou.bmp",85,910,148,929,169) then
+		click(x,y)
+	--人物达到55级是否分享
+	elseif DmFindPic("suanle.bmp",85,481,378,498,400) then
+		click(x,y)
 	end
 end
 

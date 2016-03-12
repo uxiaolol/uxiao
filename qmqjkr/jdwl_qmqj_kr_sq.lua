@@ -99,6 +99,43 @@ function emgcms()
 	end
 end
 
+
+--ios设置系统包名"com.apple.Preferences"
+function vpn()
+	jdwlLog("vpn")
+	appKill("com.apple.Preferences")
+	math.randomseed(tostring(os.time()):reverse():sub(1,6))
+	local index={{456,500},{552,505},{654,505},{749,505},{858,512},{948,506}}
+	local count = 0
+	while true do
+		--vpn断开连接
+		if DmFindPic("vpnlianjie.bmp",85,487,215,527,262) then--570,425
+			click(x+83,y+210)
+		elseif count > 3 and DmFindPic("shezhi.bmp",85,73,563,101,578) and DmFindPic("pn.bmp",85,232,562,258,580) and DmFindPic("anniu.bmp",85,212,96,228,112) then
+			local zb=math.random(1,6)
+			click(index[zb][1],index[zb][2]) mSleep(500)
+		elseif DmFindPic("vpnlianjie1.bmp",85,446,376,489,403) then--689,323
+			click(x+243,y-50)
+			count = count + 1
+		--设置中vpn选项
+		elseif DmFindPic("vpnlanse.bmp",85,587,586,606,604) then
+			click(x,y)
+		--vpn详细界面
+		elseif DmFindPic("shezhi.bmp",85,73,563,101,578) and DmFindPic("pn.bmp",85,232,562,258,580) and DmFindPic("anniu.bmp",85,212,96,228,112) then
+			click(x,y)
+		--sim卡
+		elseif DmFindPic("hao.bmp",85,605,303,655,348) then
+			click(x,y)			
+		--连接成功
+		elseif DmFindPic("lvanniu.bmp",85,260,82,275,97) and DmFindPic("lian.bmp",85,321,121,334,139) then
+			jdwlLog("vpn reconnect success")
+			break
+		else
+			appRun("com.apple.Preferences")
+		end	
+	end
+end
+
 --收钱模式
 function shouqian()
 	while true do
@@ -808,7 +845,7 @@ function shou()
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
-		elseif count > 20 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
+		elseif count > 40 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			mSleep(500)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -869,7 +906,7 @@ function shou()
 		elseif DmFindPic('diqiu.bmp',85,179,596,194,610)  or DmFindPic('diqiu1.bmp',85,152,596,167,613)then--975,601
 			click(x+796,y+5)		
 		--收钱超时
-		elseif DmFindPic('x_liaotian.bmp',85,1090,39,1104,52)==false and  DmFindPic('jiaoyiduifang.bmp',85,891,548,906,558) ==false and DmFindPic('jiaoyianniu.bmp',85,436,575,452,587)==false and os.difftime(os.time(),cs) > 360 then
+		elseif DmFindPic('x_liaotian.bmp',85,1090,39,1104,52)==false and  DmFindPic('jiaoyiduifang.bmp',85,891,548,906,558) ==false and DmFindPic('jiaoyianniu.bmp',85,436,575,452,587)==false and os.difftime(os.time(),cs) > 480 then
 			kill()
 			jdwlLog("收钱超时")
 			start=os.time()
@@ -1749,10 +1786,15 @@ function connect()
 		click(x,y)
 	elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
 		click(x,y)		
+	--vpn断开连接
+	elseif DmFindPic("vpnlianjie.bmp",85,487,215,527,262) then
+		click(x+83,y+210)
+		vpn()
 	else
 		mSleep(300)
 	end
 end
+
 --退出游戏
 function tuichu()
 	jdwlLog('退出游戏')
