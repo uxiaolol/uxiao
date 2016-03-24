@@ -1058,7 +1058,7 @@ function bingfenggu()
 		elseif DmFindPic('bingfenggu.bmp',85,1002,17,1018,33) then
 			isok=1
 		--点击世界地图上的冰风谷
-		elseif DmFindPic('bfg.bmp',85,358,253,369,265) then
+		elseif DmFindPic('bfg.bmp',85,360,254,372,267) then
 			click(x,y)mSleep(1000)
 						--关闭地图
 			local tt=os.time()
@@ -2452,7 +2452,7 @@ function tuichu()
 		elseif DmFindPic('fuli.bmp',85,652,40,662,48)==false and DmFindPic('beibao.bmp',85,846,614,858,626) and DmFindPic('head.bmp',85,12,46,21,57) then
 			click(x,y)mSleep(1000)	
 		--登录界面进入游戏
-		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) then
+		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) or DmFindPic("denglujinru1.bmp",85,807,501,823,512) then
 			jdwlLog('退出游戏完成')			
 			break
 		--登录时候的广告

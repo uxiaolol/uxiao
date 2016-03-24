@@ -897,7 +897,7 @@ function bingfenggu()
 		elseif DmFindPic('bingfenggu.bmp',85,1002,17,1018,33) then
 			isok=1
 		--点击世界地图上的冰风谷
-		elseif DmFindPic('bfg.bmp',85,358,253,369,265) then
+		elseif DmFindPic('bfg.bmp',85,360,254,372,267) then
 			click(x,y)mSleep(1000)
 						--关闭地图
 			local tt=os.time()
