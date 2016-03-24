@@ -153,7 +153,7 @@ function unlock()
 				break
 			--安全模式
 			elseif DmFindPic('de.bmp',85,383,14,411,36,1) or DmFindPic('de1.bmp',85,382,16,410,35) then
-				os.execute('reboot')
+				os.execute("reboot")
 			--sim卡
 			elseif DmFindPic('simcard.bmp',80,320,612,347,645) or DmFindPic("simcard1.bmp",80,309,608,344,646) then
 				click(x,y)				
@@ -194,7 +194,7 @@ function denglu()
 			click(x,y)
 			os.execute("reboot")
 		--名字有问题
-		elseif DmFindPic('chuangjian.bmp',85,888,567,901,581) and DmFindPic('mingziqueding.bmp',85,638,431,649,442) then
+		elseif (DmFindPic('chuangjian.bmp',85,888,567,901,581) or DmFindPic('chuangjian1.bmp',85,886,569,898,584)) and DmFindPic('mingziqueding.bmp',85,638,431,649,442) then
 			click(x,y)mSleep(1000)
 				click(566,572)
 				inputText('\b\b\b\b\b\b\b\b\b\b')
@@ -210,20 +210,24 @@ function denglu()
 			click(x,y)		
 		
 		--登录界面进入游戏
-		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) then
+		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) or DmFindPic("denglujinru1.bmp",85,807,501,823,512) then
 			click(x,y)
 --[[		--选区
 		elseif DmFindPic("xuanzequ.bmp",85,723,393,743,413) then
 			click(x,y)--]]
 		--有角色直接进入游戏
-		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) then
+		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587)  then
 			click(x,y)					
 		--选择魔法师角色
 		elseif DmFindPic('chuangjian.bmp',85,888,567,901,581) and DmFindPic('huimofa.bmp',85,155,293,166,305) then
 			click(x,y)
+		elseif DmFindPic('chuangjian1.bmp',85,886,569,898,584) and DmFindPic('huimofa1.bmp',85,155,294,167,306) then
+			click(x,y)			
 		--确认选中之后创建
 		elseif DmFindPic('hongmofa.bmp',85,158,289,170,301) and DmFindPic('chuangjian.bmp',85,888,567,901,581) then
 			click(x,y)
+		elseif DmFindPic('hongmofa1.bmp',85,155,296,170,305) and DmFindPic('chuangjian1.bmp',85,886,569,898,584)then
+			click(x,y)			
 		--创建角色之后弹出个不认识的框
 		elseif DmFindPic('burenshi.bmp',85,549,226,561,237) and DmFindPic('burenshiqueding.bmp',85,639,429,651,437) then
 			click(x,y)
@@ -278,6 +282,8 @@ function denglu()
 			start=os.time()
 		elseif DmFindPicFuzzy("simcard2.bmp",85,602,305,647,344,0xffffff) then
 			click(x,y)
+		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then			
+			click(x,y)
 		else
 			mSleep(500)
 		end
@@ -295,7 +301,10 @@ function shezhi()
 			jdwlLog("设置超时")
 			start=os.time()
 		elseif DmFindPic('x_fuli.bmp',85,1092,44,1106,56) then
-			click(x,y)			
+			click(x,y)		
+		--开始征程
+		elseif DmFindPic('kaishizhengcheng.bmp',85,795,464,806,473) then
+			click(x,y)
 		--屏蔽玩家
 		elseif DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
@@ -305,7 +314,7 @@ function shezhi()
 		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
 			click(x,y)
 		--设置完成
-		elseif DmFindPic("xuanzhong.bmp",85,488,371,502,386) and DmFindPic("x_shezhi.bmp",85,823,116,836,126) then
+		elseif (DmFindPic("xuanzhong.bmp",85,488,371,502,386) or DmFindPic("xuanzhong1.bmp",85,489,374,500,388) ) and DmFindPic("x_shezhi.bmp",85,823,116,836,126) then
 			click(x,y)
 			isok=1
 		--点击画面选项
@@ -322,6 +331,8 @@ function shezhi()
 			mSleep(1500)
 		--点击功能按钮
 		elseif DmFindPic('gongneng.bmp',85,805,63,818,74) then
+			click(x,y)
+		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then			
 			click(x,y)
 		else
 			mSleep(300)
@@ -350,6 +361,9 @@ function zhuxian()
 			lq=0
 			qw=0
 			cnt=0
+		--开始征程
+		elseif DmFindPic('kaishizhengcheng.bmp',85,795,464,806,473) then
+			click(x,y)			
 		--世界地图打开了
 		elseif DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then	
 			click(x,y)mSleep(1000) 
@@ -445,7 +459,7 @@ function zhuxian()
 		elseif DmFindPic('peidaicb.bmp',85,541,333,554,343) then
 			click(x,y)mSleep(1000)
 		--翅膀佩戴完成
-		elseif DmFindPic('xiexia.bmp',85,577,331,593,339) and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif (DmFindPic('xiexia.bmp',85,577,331,593,339) or DmFindPic('xiexia1.bmp',85,543,330,558,343) )and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53) )then
 			click(x,y)
 		--章节奖励
 		elseif DmFindPic('zhangjie.bmp',85,546,492,559,502) or DmFindPic('zhangjie1.bmp',85,544,487,556,497) then
@@ -453,9 +467,9 @@ function zhuxian()
 			lq=0
 			qw=0
 		--前往转身
-		elseif DmFindPic('qianwangzhuansheng.bmp',85,438,397,451,408) then
-			click(x,y)
-		--转生关闭窗口不见了
+--[[		elseif DmFindPic('qianwangzhuansheng.bmp',85,438,397,451,408) then
+			click(x,y)--]]
+--[[		--转生关闭窗口不见了
 		elseif DmFindPic('xuqiudengji.bmp',80,792,438,802,457) and DmFindPic('x_zhuansheng.bmp',85,1091,42,1102,53) then		
 			click(x,y)
 		elseif DmFindPic('xuqiudengji.bmp',80,792,438,802,457) and DmFindPic('x_zhuansheng.bmp',85,1091,42,1102,53)==false then
@@ -465,7 +479,7 @@ function zhuxian()
 			click(x,y)
 		--转生按钮
 		elseif DmFindPic('anniuzhuansheng.bmp',85,859,578,873,592) then
-			click(x,y)		
+			click(x,y)		--]]
 		--一键满星
 		elseif DmFindPic('yijianmanxing.bmp',85,1005,494,1017,513) then
 			click(x,y)
@@ -940,7 +954,7 @@ function goumai()
 		--商店绑钻类未选中
 		elseif DmFindPic('huibangzuan.bmp',85,829,101,850,114) then
 			click(x,y)			
-		elseif DmFindPic('empz.bmp',85,764,137,803,532) then
+		elseif DmFindPic('empz.bmp',75,357,139,433,534) then
 			click(x,y)
 		elseif count > 3 and DmFindPic('bangzuanlei.bmp',85,764,104,779,115) then--1100,45
 			click(x+336,y-60)
@@ -1087,7 +1101,7 @@ function bubangding()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('判断背包是否有东西完成')
 			return you
-		elseif isok==1 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif isok==1 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53))then
 			click(x,y)
 		--打开背包
 		elseif DmFindPic('beibao.bmp',85,846,614,858,626) then		
@@ -1370,7 +1384,7 @@ function fanhuijuese()
 		elseif DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
 			
-		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) then
+		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587) then
 			jdwlLog('返回角色完成')
 			break
 		elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
@@ -1408,25 +1422,49 @@ function fanhuijuese()
 		elseif DmFindPic('smqd.bmp',85,638,430,653,442) then
 			click(x,y)					
 		--登录界面进入游戏
-		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) then
+		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) or DmFindPic("denglujinru1.bmp",85,807,501,823,512) then
 			click(x,y)
 		elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
 			click(x,y)
 			kill()
 			iGrimace()
-			os.execute("reboot")										
+			os.execute("reboot")									
 		else
 			mSleep(300)
 		end
 	end
 end
 
+--获取当前时
+function hours()
+	local tm=os.date("*t")
+	return tm.hour
+end
+
 --获取名字
 function getname()
-	local file
-	file = io.open("/var/touchelf/scripts/收钱名.txt","r")
-	sname = file:read()
-	return sname
+	local file,l
+	file = io.open("/var/touchelf/scripts/name.txt","r")
+	for l in file:lines() do
+		local name=Split(l,",")
+		local index=tonumber(name[2])
+		local tm=hours()
+		if (tm >= 0 and tm<=3) and index==1 then
+			return name[1]
+		elseif tm >= 4 and tm <=7 and index==2 then
+			return name[1]
+		elseif tm >=8  and tm <= 11 and index==3 then
+			return name[1]
+		elseif tm >=12 and tm <= 15 and index==4 then
+			return name[1]
+		elseif tm >=16 and tm <= 19 and index==5 then
+			return name[1]
+		elseif tm >=20 and tm <=23 and index==6 then
+			return name[1]
+		end
+	end
+	--[[sname = file:read()
+	return sname--]]
 end
 
 --寻找背包不绑定的材料
@@ -1672,7 +1710,7 @@ function chibang()
 			jdwlLog('升级翅膀完成')
 			break
 		--关闭翅膀
-		elseif isok==1 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif isok==1 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53))then
 			click(x,y)
 		--到达二阶段
 		elseif count>1 and DmFindPic("erjie.bmp",85,179,139,192,159) then
@@ -1746,28 +1784,28 @@ function huozhong()
 		elseif isok==1 and DmFindPic('x_huozhong.bmp',85,790,100,802,112) then
 			click(x,y)			
 		--点击火种
-		elseif isbuy ==0 and DmFindPic('huozhong.bmp',85,482,518,499,534) then
+		elseif isbuy ==0 and ( --[[DmFindPic("bangzuan.bmp",85,763,102,780,117) and--]] DmFindPic('huozhong1.bmp',85,939,518,956,531) )then
 			click(x,y)
 		--点击数量
 		elseif isbuy==0 and DmFindPic('zuida.bmp',85,706,429,718,441) then--589,433
 			click(x-120,y+5)
 		--点击1
-		elseif one==0 and DmFindPic('one.bmp',85,447,276,466,305) then
+		elseif one==0 and (DmFindPic('one.bmp',85,447,276,466,305) or DmFindPic('one1.bmp',85,446,279,463,299) )then
 			click(x,y)
 			one=1
 		--点击3
-		elseif three == 0 and DmFindPic('three.bmp',85,636,276,653,305) then
+		elseif three == 0 and (DmFindPic('three.bmp',85,636,276,653,305) or DmFindPic('three1.bmp',85,635,278,653,303) ) then
 			click(x,y)
 			three = 1
-		elseif isbuy == 1 and DmFindPic('gm.bmp',85,825,474,838,485) then
+		elseif isbuy == 1 and (DmFindPic('gm.bmp',85,825,474,838,485) or DmFindPic('gm1.bmp',85,827,473,840,485) )then
 			click(x,y)
 			isok=1
 			mSleep(2000)
 			sctime=os.time()
 		--点击购买
-		elseif DmFindPic('goumai.bmp',85,742,459,757,474) then
+		elseif (DmFindPic('goumai.bmp',85,742,459,757,474) or DmFindPic('goumai1.bmp',85,718,453,731,470) )then
 			click(x,y)mSleep(2000)
-			if DmFindPic('goumai.bmp',85,742,459,757,474)then
+			if (DmFindPic('goumai.bmp',85,742,459,757,474) or DmFindPic('goumai1.bmp',85,718,453,731,470))then
 				click(x,y)
 			end
 			isbuy =1
@@ -1802,7 +1840,7 @@ function hushenfu()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('兑换护身符完成')
 			break	
-		elseif isok==1 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_mojing.bmp',85,1093,39,1106,53))then
+		elseif isok==1 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53) or DmFindPic('x_mojing.bmp',85,1093,39,1106,53))then
 			click(x,y)
 		--佩带装备
 		elseif DmFindPic('peidai.bmp',85,712,507,724,519) or DmFindPic('peidai1.bmp',85,712,472,725,482) then
@@ -1854,7 +1892,7 @@ function jineng()
 		--佩带装备
 		elseif DmFindPic('peidai.bmp',85,712,507,724,519) or DmFindPic('peidai1.bmp',85,712,472,725,482) then
 			click(x,y)				
-		elseif isok==1 and (DmFindPic('x_cailiao.bmp',85,732,80,746,95) or DmFindPic('x_cb.bmp',85,1097,39,1110,52)) then
+		elseif isok==1 and (DmFindPic('x_cailiao.bmp',85,732,80,746,95) or DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53)) then
 			click(x,y)
 		--打开背包
 		elseif DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -1891,6 +1929,7 @@ function wuqi()
 			click(x,y)
 		elseif os.difftime(os.time(),start)>180 then
 			jdwlLog("强化武器超时")
+			kill()
 			isok=0
 			isfr=0
 			count=0
@@ -2078,7 +2117,7 @@ function qifu()
 			click(x,y)
 			iscl=1
 		--拿出祈福仓库的物品
-		elseif DmFindPic('zuanshiqifu.bmp',85,381,596,395,609) and DmFindPic('cangku.bmp',85,976,55,987,67) then
+		elseif DmFindPic('zuanshiqifu.bmp',85,381,596,395,609) and (DmFindPic('cangku.bmp',85,976,55,987,67) or DmFindPic('cangku1.bmp',85,960,52,976,70))then
 			click(x,y)mSleep(1000)
 		--佩带装备
 		elseif DmFindPic('peidai.bmp',85,712,507,724,519) or DmFindPic('peidai1.bmp',85,712,472,725,482) then
@@ -2350,11 +2389,12 @@ function connect()
 	elseif DmFindPic('smqd.bmp',85,638,430,653,442) then
 		click(x,y)					
 	--登录界面进入游戏
-	elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) then
+	elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) or DmFindPic("denglujinru1.bmp",85,807,501,823,512) then
 		click(x,y)
 	--有角色直接进入游戏
-	elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) then
-		click(x,y)
+	elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587)  then
+		click(x,y)	
+
 	--登录异常刷机
 	elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
 		click(x,y)	
@@ -2383,13 +2423,13 @@ function tuichu()
 			cuowu=0
 			start=os.time()
 		--没角色了
-		elseif DmFindPic('meijuese.bmp',85,115,217,131,233) and DmFindPic('juesejinru.bmp',85,519,572,532,583) then
+		elseif DmFindPic('meijuese.bmp',85,115,217,131,233) and (DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587))then
 			jdwlLog('退出完成')
 			break
 		--删除角色
-		elseif DmFindPic('x_juese.bmp',85,300,219,314,233) then
+		elseif DmFindPic('x_juese.bmp',85,300,219,314,233) or DmFindPic('x_juese1.bmp',85,301,220,313,234) then
 			click(x,y)			
-		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) then
+		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587)then
 			mSleep(3000)
 		elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
 			click(658,434)			
@@ -2488,11 +2528,11 @@ function beibao(purple)
 			click(x,y)mSleep(500)
 		elseif purple~=nil and DmFindPic('quxiaohuishou.bmp',85,687,586,699,596) and DmFindPic('xuanxiang.bmp',80,271,495,428,534) then
 			click(x,y)mSleep(500)
-		elseif count > 3 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif count > 3 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53))then
 			if DmFindPic('zhengli.bmp',85,1010,586,1023,597) then
 				click(x,y)mSleep(1500)
 			end
-			if DmFindPic('x_cb.bmp',85,1097,39,1110,52) then 
+			if DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53) then 
 				click(x,y)mSleep(500)
 			end
 			isok=1
@@ -2508,7 +2548,7 @@ function beibao(purple)
 			click(x,y)
 		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
 			click(x,y)
-		elseif os.difftime(os.time(),start)	> 30 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif os.difftime(os.time(),start)	> 30 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53)) then
 			click(x,y)
 			start=os.time()
 		else
@@ -2555,7 +2595,7 @@ function shiyong()
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('使用物品完成')
 			break
-		elseif isok==1 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif isok==1 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53) )then
 			click(x,y)
 		--打开背包
 		elseif DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -2869,6 +2909,25 @@ function isMoveing()
 	end
 end
 
+
+--分割字符串
+--local list = Split("abc,123,345", ",")--示例
+function Split(szFullString, szSeparator)  
+	local nFindStartIndex = 1  
+	local nSplitIndex = 1  
+	local nSplitArray = {}  
+	while true do  
+	   local nFindLastIndex = string.find(szFullString, szSeparator, nFindStartIndex)  
+	   if not nFindLastIndex then  
+		nSplitArray[nSplitIndex] = string.sub(szFullString, nFindStartIndex, string.len(szFullString))  
+		break  
+	   end  
+	   nSplitArray[nSplitIndex] = string.sub(szFullString, nFindStartIndex, nFindLastIndex - 1)  
+	   nFindStartIndex = nFindLastIndex + string.len(szSeparator)  
+	   nSplitIndex = nSplitIndex + 1  
+	end  
+	return nSplitArray  
+end  
 function NewGetColor(x,y)
 	local color = getColor(x-5,y-5)
 	return color
