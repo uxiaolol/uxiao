@@ -1113,6 +1113,8 @@ function bubangding()
 			you=0
 			isok=0
 			start=os.time()
+		elseif DmFindPic('x_liaotian.bmp',85,1090,39,1104,52)	then
+			click(x,y)
 		--屏蔽玩家
 		elseif DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)	
@@ -1310,11 +1312,17 @@ function jiaoyi()
 		elseif fs > 20 and 	DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
 			fs=0
-			--yaodian()
 			fanhuijuese()
+		elseif cnt > 5 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
+			click(x,y)
+			if bubangding() == 0 then
+				isok=1	
+			end
 		elseif count > 1 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
-			isok=1				
+			if bubangding() == 0 then
+				isok=1				
+			end
 		--打开聊天
 		elseif DmFindPic('liaotian.bmp',85,751,590,777,601) then
 			click(x,y)
@@ -1326,7 +1334,7 @@ function jiaoyi()
 			issay=1
 			start=os.time()
 		--发送说话
-		elseif issay==1 and 	DmFindPic('fasong.bmp',85,953,586,971,600) then
+		elseif issay==1 and DmFindPic('fasong.bmp',85,953,586,971,600) then
 			click(x,y)
 			issay = 0
 			mSleep(5000)
@@ -1334,11 +1342,18 @@ function jiaoyi()
 			jy=0
 		elseif count>1 and DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then
 			click(658,434)
-			isok=1
+			if bubangding() == 0 then
+				isok=1
+				count=0
+			end
 		--取消交易
 		elseif cnt<=6 and isdeal>1 and DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
 			click(658,434)
-			isok=1
+			if bubangding() == 0 then
+				isok=1
+				cnt=0
+				isdeal=0
+			end
 		--弹出交易提示
 		elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then
 			click(x,y)
@@ -1358,10 +1373,8 @@ function jiaoyi()
 		elseif DmFindPic('dajiaoyi.bmp',85,595,51,613,62) then
 			mSleep(2000)
 			if isdeal==0 and DmFindPic('dajiaoyi.bmp',85,595,51,613,62) then
-				
 				cnt = give()
-				money()
-				--give()
+				--money()
 				isdeal=isdeal + 1
 				count=count+1
 			--锁定
@@ -1608,38 +1621,33 @@ function give()
 			wz=wz+1
 			nz=1
 		end
-		mSleep(500)
+		mSleep(100)
 		if nz==2 then
 			--放入/装备
 			if DmFindPic('fangruzhuangbei.bmp',80,804,483,873,565) or DmFindPic('fangruzhuangbei.bmp',80,946,485,988,553) then
-				mSleep(500)
 				click(x,y)
 				count = count + 1
 			--放入堆叠创造玛雅羽毛灵魂祝福
 			elseif DmFindPic('fangru1.bmp',85,823,326,835,335) then
-				mSleep(500)
 				click(x,y)
 				count = count + 1
 			--放入堆叠生命
 			elseif DmFindPic('fangru2.bmp',85,822,317,837,326) then
-				mSleep(500)
 				click(x,y) 
 				count = count + 1
 			--放入单个创造玛雅羽毛灵魂祝福
 			elseif DmFindPic('fangru3.bmp',85,820,289,833,297) then
-				mSleep(500)
 				click(x,y) 
 				count = count + 1
 			--放入单个生命
 			elseif DmFindPic('fangru4.bmp',85,820,276,832,288) then
-				mSleep(500)
 				click(x,y) 
 				count = count + 1
 			elseif DmFindPic('x_weizhijiaoyi.bmp',85,1096,37,1109,51) then
 				click(x,y)
 			end
 			if count < 7 then
-				wz=0
+				wz=wz-1
 			end
 		end	
 		
