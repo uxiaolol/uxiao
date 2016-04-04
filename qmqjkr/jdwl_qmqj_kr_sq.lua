@@ -992,7 +992,7 @@ function shou()
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
-		elseif count > 40 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
+		elseif count > 20 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			mSleep(500)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
