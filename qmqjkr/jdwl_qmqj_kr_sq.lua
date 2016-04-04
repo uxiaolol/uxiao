@@ -82,7 +82,6 @@ function main()
 	denglu()
 	zhuxian()
 	beibao("no")
-	
 	shouqian()
 end
 
@@ -988,6 +987,7 @@ function shou()
 	local cs=os.time()
 	local jy=0
 	local tt = os.time()
+	local zheng=0
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
@@ -1028,17 +1028,14 @@ function shou()
 			count = count + 1
 			zl=os.time()
 			mSleep(3000)
+			jy=0
 		--对方面板打开交易对方
 		elseif DmFindPic('jiaoyiduifang.bmp',85,891,548,906,558) then
 			click(x,y)mSleep(5000)
 		--点击锁定
 		elseif DmFindPic('suoding.bmp',85,153,574,169,588) then
-			click(x,y)mSleep(2000)
-			if DmFindPic('zhengli1.bmp',85,1043,587,1060,602) then
-				click(x,y)mSleep(1500)
-				logDebug("交易界面整理装备")
-			end			
-		elseif jy >30 and DmFindPic('jiaoyianniu.bmp',85,436,575,452,587) and DmFindPic("x_jiaoyi.bmp",85,1093,43,1107,56) then
+			click(x,y)mSleep(2000)	
+		elseif jy >20 and DmFindPic('jiaoyianniu.bmp',85,436,575,452,587) and DmFindPic("x_jiaoyi.bmp",85,1093,43,1107,56) then
 			click(x,y)
 			jdwlLog("交易界面卡住了")
 			jy=0
@@ -1046,13 +1043,16 @@ function shou()
 			zl=os.time()
 			cs=os.time()
 		--点击交易
-		elseif DmFindPic('jiaoyianniu.bmp',85,436,575,452,587) then
-			click(x,y)mSleep(3000)
+		elseif zheng==0 and DmFindPic('jiaoyianniu.bmp',85,436,575,452,587) then
+			click(x,y)mSleep(1500)
 			count = count + 1
 			jy=jy+1
-			if DmFindPic('zhengli1.bmp',85,1043,587,1060,602) then
-				click(x,y)mSleep(1500)
-			end		
+			zheng=1
+			cs=os.time()
+		elseif zheng==1 and DmFindPic('zhengli1.bmp',85,1043,587,1060,602) then
+			click(1077,601)
+			zheng=0
+			logDebug("交易界面整理装备")
 		elseif DmFindPic('x_weizhijiaoyi.bmp',85,1096,37,1109,51) then
 			click(x,y)			
 		elseif DmFindPic('x_zhuangbei.bmp',85,785,33,800,44) then

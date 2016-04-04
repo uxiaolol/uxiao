@@ -1402,25 +1402,41 @@ function jiaoyi()
 			break
 		elseif isok==1 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
+		elseif isok==1 and DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
+			click(658,434)	
 		elseif fs > 20 and 	DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
 			fs=0
-			--yaodian()
-			fanhuijuese(i)
-		elseif count > 1 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
+			fanhuijuese()
+		elseif cnt > 5 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
-			isok=1				
+			if bubangding(i) == 0 then
+				isok=1	
+			end
+			cnt=0
+		elseif count >=1 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
+			click(x,y)
+			if bubangding(i) == 0 then
+				isok=1				
+			else
+				count=0
+			end	
 		--打开聊天
 		elseif DmFindPic('liaotian.bmp',85,751,590,777,601) then
 			click(x,y)
-		
 		--说话
 		elseif issay==0 and DmFindPic('fasong.bmp',85,953,586,971,600) then--816,591
-			click(x-137,y+5)mSleep(1000)
-			local name = getname()
-			inputText(name.." zai")
-			issay=1
-			start=os.time()
+			local shuohua=math.random(3,6)
+			for j=1,shuohua do
+				mSleep(1000)
+			end
+			if DmFindPic('fasong.bmp',85,953,586,971,600) then
+				click(x-137,y+5)mSleep(1000)
+				local name = getname()
+				inputText(name.." zai")
+				issay=1
+				start=os.time()
+			end	
 		--发送说话
 		elseif issay==1 and 	DmFindPic('fasong.bmp',85,953,586,971,600) then
 			click(x,y)
@@ -1430,11 +1446,20 @@ function jiaoyi()
 			jy=0
 		elseif count>1 and DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then
 			click(658,434)
-			isok=1
+			if bubangding(i) == 0 then
+				isok=1
+			else
+				count=0
+			end	
 		--取消交易
 		elseif cnt<=6 and isdeal>1 and DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
 			click(658,434)
-			isok=1
+			if bubangding(i) == 0 then
+				isok=1
+			else
+				cnt=0
+				isdeal=0			
+			end
 		--弹出交易提示
 		elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then
 			click(x,y)
@@ -1454,9 +1479,8 @@ function jiaoyi()
 		elseif DmFindPic('dajiaoyi.bmp',85,595,51,613,62) then
 			mSleep(2000)
 			if isdeal==0 and DmFindPic('dajiaoyi.bmp',85,595,51,613,62) then
-				cnt = give(i)
-				money(i)
-				--give()
+				cnt = give()
+				--money()
 				isdeal=isdeal + 1
 				count=count+1
 			--锁定

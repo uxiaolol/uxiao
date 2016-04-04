@@ -1137,6 +1137,8 @@ function bubangding()
 					break
 				elseif DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 					click(x,y)
+				elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
+					click(658,434)					
 				end
 			end
 			isok=1
@@ -1309,6 +1311,8 @@ function jiaoyi()
 			break
 		elseif isok==1 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
+		elseif isok==1 and DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
+			click(658,434)	
 		elseif fs > 20 and 	DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
 			fs=0
@@ -1318,21 +1322,30 @@ function jiaoyi()
 			if bubangding() == 0 then
 				isok=1	
 			end
-		elseif count > 1 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
+			cnt=0
+		elseif count >=1 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
 			click(x,y)
 			if bubangding() == 0 then
 				isok=1				
-			end
+			else
+				count=0
+			end	
 		--打开聊天
 		elseif DmFindPic('liaotian.bmp',85,751,590,777,601) then
 			click(x,y)
 		--说话
 		elseif issay==0 and DmFindPic('fasong.bmp',85,953,586,971,600) then--816,591
-			click(x-137,y+5)mSleep(1000)
-			local name = getname()
-			inputText(name.." zai")
-			issay=1
-			start=os.time()
+			local shuohua=math.random(3,6)
+			for j=1,shuohua do
+				mSleep(1000)
+			end
+			if DmFindPic('fasong.bmp',85,953,586,971,600) then
+				click(x-137,y+5)mSleep(1000)
+				local name = getname()
+				inputText(name.." zai")
+				issay=1
+				start=os.time()
+			end	
 		--发送说话
 		elseif issay==1 and DmFindPic('fasong.bmp',85,953,586,971,600) then
 			click(x,y)
@@ -1344,15 +1357,17 @@ function jiaoyi()
 			click(658,434)
 			if bubangding() == 0 then
 				isok=1
+			else
 				count=0
-			end
+			end	
 		--取消交易
 		elseif cnt<=6 and isdeal>1 and DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
 			click(658,434)
 			if bubangding() == 0 then
 				isok=1
+			else
 				cnt=0
-				isdeal=0
+				isdeal=0			
 			end
 		--弹出交易提示
 		elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then
@@ -1555,6 +1570,8 @@ function xunzhao()
 			return true
 		elseif find_Onequyu(0xAE31AE,85,658+a*93,172+b*93,668+a*93,178+b*93) then
 			return true
+		elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
+			click(658,434)			
 		else
 			wz=wz+1
 		end
