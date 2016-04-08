@@ -210,9 +210,9 @@ function denglu()
 		elseif DmFindPic("paidui.bmp",85,550,430,569,443) then
 			notifyMsg("排队")
 			start[i]=os.time()		--]]	
-		elseif os.difftime(os.time(),start[i]) > 120 then
+		elseif os.difftime(os.time(),start[i]) > 180 then
 			kill(i)
-			logDebug(string.format("%s:登录超时"))
+			logDebug(string.format("%s:登录超时",i))
 			start[i]=os.time()
 		elseif DmFindPic('meijuese.bmp',85,115,217,131,233) then
 			click(x,y)
@@ -300,6 +300,7 @@ function denglu()
 			kill(i)
 			iGrimace()
 			start[i]=os.time()
+			os.execute("reboot")
 		--不允许通知	
 		elseif DmFindPic("buyunxu.bmp",85,387,430,420,462) then	
 			click(x,y)
@@ -322,6 +323,14 @@ function denglu()
 			click(x,y)
 		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then			
 			click(x,y)
+		elseif DmFindPic('x_fuli.bmp',85,1092,44,1106,56) then
+			click(x,y)	
+		--关闭其他窗口
+		elseif (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53) or DmFindPic('x_mojing.bmp',85,1093,39,1106,53))then
+			click(x,y)
+		elseif (DmFindPic('x_cangku.bmp',85,1093,41,1108,51) or DmFindPic('x_qifu.bmp',85,1091,46,1103,56)) then	
+			click(x,y)
+		--关闭其他窗口结束	
 		else
 			anchorApp(i)
 			mSleep(500)
@@ -409,7 +418,7 @@ function zhuxian()
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
 		elseif os.difftime(os.time(),start[i]) > 240 or lq[i]>15 or qw[i]>15  then
-			kill()
+			kill(i)
 			local str = string.format("%s:主线任务超时",i)
 			jdwlLog(str)
 			clktime[i]=os.time()
@@ -421,6 +430,12 @@ function zhuxian()
 			jdwlLog("2个窗口主线完成")
 			start[i]=start[i]-5
 			break
+		elseif isok[i]	==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
+			local str=string.format("%s到达100",i)
+			start[i]=start[i]-3
+		--背包满了
+		elseif DmFindPic('beibaoman.bmp',80,919,292,932,305) or DmFindPic('beibaoman1.bmp',80,932,295,942,305) then
+			beibao(i)					
 		--开始征程
 		elseif DmFindPic('kaishizhengcheng.bmp',85,795,464,806,473) then
 			click(x,y)			
@@ -557,7 +572,7 @@ function zhuxian()
 		--回城复活
 		elseif DmFindPic("huichengfuhuo.bmp",85,500,363,516,377) then
 			click(x,y)	mSleep(5000)
-			maiyao()
+			--maiyao()
 		else
 			mSleep(300)
 			connect(i)
@@ -787,7 +802,7 @@ function emgc()
 		--进恶魔点到	地图
 		elseif DmFindPic('emo.bmp',85,576,49,589,60) and DmFindPic('x_em.bmp',85,1088,41,1103,52) then
 			click(x,y)	mSleep(500)
-			cs=os.time()	
+			cs[i]=os.time()	
 		--超时
 		elseif os.difftime(os.time(),cs[i])> 180 or count[i] >8 then
 			kill(i)
@@ -809,6 +824,8 @@ function emgc()
 			click(x,y)
 		--回城复活
 		elseif DmFindPic("huichengfuhuo.bmp",85,500,363,516,377) then
+			click(x,y)
+		elseif (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53))then			
 			click(x,y)
 		else
 			mSleep(300)
@@ -894,7 +911,7 @@ function jinru(i)
 	while true do
 		changeApp(i)
 		if os.difftime(os.time(),start) > 150 then
-			kill()
+			kill(i)
 			jdwlLog("进入恶魔广场超时")
 			start=os.time()
 		--屏蔽玩家
@@ -1565,7 +1582,7 @@ function fanhuijuese(i)
 			click(x,y)
 			kill(i)
 			iGrimace()
-			emgcms()		
+			os.execute("reboot")	
 		else
 			mSleep(300)
 		end
@@ -1931,7 +1948,7 @@ function huozhong(i)
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)		
 		elseif os.difftime(os.time(),start)	> 120 then
-			kill()
+			kill(i)
 			jdwlLog("购买火种超时")
 			break
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -2545,7 +2562,7 @@ function meiri()
 			click(x,y)		
 		elseif os.difftime(os.time(),start)	> 180 then
 			jdwlLog("每日在线奖励超时")
-			kill()
+			kill(i)
 			start=os.time()
 			isok=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -2658,9 +2675,9 @@ function connect(i)
 	--登录异常刷机
 	elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
 		click(x,y)	
-		kill()
+		kill(i)
 		iGrimace()	
-		emgcms()
+		os.execute("reboot")
 	elseif DmFindPicFuzzy("simcard2.bmp",85,602,305,647,344,0xffffff) then
 		click(x,y)
 	--游客模式
@@ -2668,6 +2685,8 @@ function connect(i)
 		click(x,y)
 	elseif DmFindPic("youkequeding.bmp",85,465,428,478,443) then
 		click(x,y)mSleep(3000)		
+	elseif (DmFindPic('chuangjian.bmp',85,888,567,901,581) or DmFindPic('chuangjian1.bmp',85,886,569,898,584)) then
+		denglu()	
 	else
 		mSleep(300)
 	end
@@ -2773,6 +2792,7 @@ function tuichu()
 			click(x,y)			
 			kill(i)
 			iGrimace()
+			os.execute("reboot")
 		else
 			mSleep(500)
 			connect(i)
@@ -2796,7 +2816,7 @@ function zhengli(i)
 			click(x,y)		
 		elseif os.difftime(os.time(),start)>180 then
 			jdwlLog("整理背包超时")
-			kill()
+			kill(i)
 			start=os.time()
 			count=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -2930,7 +2950,7 @@ function shiyong(i)
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
 			click(x,y)	
 		elseif os.difftime(os.time(),start) > 180 then
-			kill()
+			kill(i)
 			jdwlLog("使用物品超时")
 			start=os.time()
 			a=0
@@ -2977,6 +2997,9 @@ function shiyong(i)
 		--未知物品
 		elseif DmFindPic('x_weizhi.bmp',85,1095,38,1112,51) then
 			click(x,y)
+		--世界地图打开了
+		elseif DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then	
+			click(x,y)mSleep(1000) 			
 		else
 			mSleep(500)
 			connect(i)

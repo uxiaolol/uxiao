@@ -82,7 +82,9 @@ function main()
 	denglu()
 	zhuxian()
 	beibao("no")
+	cangku()	
 	shouqian()
+
 end
 
 --恶魔广场模式
@@ -924,6 +926,71 @@ function bingfenggu()
 	end
 end
 
+--前往冰风谷仓库存放东西
+function cangku()
+	bingfenggu()
+	jdwlLog("前往仓库")
+	local isok=0
+	local starttime=os.time()
+	local index=0
+	local wz=1
+	local a=0
+	local b=0
+	while true do
+		if wz <= 5 then
+			a = wz-1
+			b = 0
+		elseif wz > 5 and wz <= 10 then
+			a = wz - 6
+			b = 1
+		elseif wz > 10 and wz <= 15 then
+			a = wz - 11
+			b = 2
+		elseif wz > 15 and wz <= 20 then
+			a = wz - 16
+			b = 3
+		end
+		--屏蔽玩家
+		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
+			click(x,y)		
+		elseif os.difftime(os.time(),starttime) > 180 then
+			kill()
+			jdwlLog("前往仓库超时")
+			start=os.time()			
+		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
+			jdwlLog("存放完毕")
+			yaodian()
+			break
+		elseif isok==1 and DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then
+			click(x,y)
+		--地图倒三角
+		elseif DmFindPic('daosanjiao.bmp',85,1113,23,1125,32) then
+			click(x,y)	mSleep(1000)
+		--打开小地图找npc
+		elseif DmFindPic('bingfenggu.bmp',85,1002,17,1018,33) then
+			click(1039,120)
+		elseif DmFindPic("cangkunpc.bmp",80,855,279,875,293) or DmFindPic("cangkunpc1.bmp",80,848,272,866,287) then
+			click(x,y)mSleep(1000)
+		--对画出来了
+		elseif DmFindPic("dakai.bmp",80,410,412,424,425) then
+			click(x,y)
+		elseif wz > 20 and DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
+			click(1105,42)
+			isok=1
+		--存放东西
+		elseif DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
+			click(690+a*93,146+b*93)
+			wz = wz + 1
+			mSleep(500)
+		elseif DmFindPic('x_sjdt.bmp',85,1091,39,1104,51) then
+			click(x,y)
+		else
+			mSleep(500)
+			connect()
+		end				
+	end
+end
+
 --前往勇者大陆药店交易
 function yaodian()
 	bingfenggu()
@@ -988,18 +1055,33 @@ function shou()
 	local jy=0
 	local tt = os.time()
 	local zheng=0
+	local kazhu=0
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
+		elseif kazhu > 10 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then
+			jdwlLog("界面卡死")
+			kill()
+			 start=os.time()
+			 count=0
+			 zl=os.time()
+			 cs=os.time()
+			 jy=0
+			 tt = os.time()
+			 zheng=0
+			 kazhu=0			
 		elseif count > 20 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			mSleep(500)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
 				zhengli()
+				cangku()
 				fanhuijuese()
+				count=0
+				kazhu=0
 			end
-			count=0
+			kazhu=kazhu+1
 		elseif os.difftime(os.time(),tt) > 300 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then

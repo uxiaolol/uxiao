@@ -292,6 +292,8 @@ function denglu()
 			click(x,y)
 		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then			
 			click(x,y)
+		elseif DmFindPic('x_fuli.bmp',85,1092,44,1106,56) then
+			click(x,y)	
 		else
 			mSleep(500)
 		end
