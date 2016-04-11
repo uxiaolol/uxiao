@@ -975,8 +975,13 @@ function cangku()
 		elseif DmFindPic("dakai.bmp",80,410,412,424,425) then
 			click(x,y)
 		elseif wz > 20 and DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
-			click(1105,42)
-			isok=1
+			if DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
+				click(x,y)
+			end
+			if DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
+				click(1105,42)
+				isok=1
+			end
 		--存放东西
 		elseif DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
 			click(690+a*93,146+b*93)
@@ -1080,8 +1085,9 @@ function shou()
 				fanhuijuese()
 				count=0
 				kazhu=0
+			else
+				kazhu=kazhu+1
 			end
-			kazhu=kazhu+1
 		elseif os.difftime(os.time(),tt) > 300 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
