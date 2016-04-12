@@ -2851,8 +2851,8 @@ function iGrimace()
 		if isnew == 0 and Mulcolor(letter_n,90,146,409,151,511) and Mulcolor(new_iphone,90,823,87,829,90) then
 			click(x,y)mSleep(8000)
 			isnew = 1
-		elseif isnew==1 and Mulcolor(letter_n,90,146,409,151,511) then
-			click(945,157)
+--[[		elseif isnew==1 and Mulcolor(letter_n,90,146,409,151,511) then
+			click(945,157)--]]
 		elseif isnew == 1 and Mulcolor(icon_exit,90,945,157,950,161) then
 			click(x,y)
 			break

@@ -957,6 +957,8 @@ function cangku()
 			kill()
 			jdwlLog("前往仓库超时")
 			start=os.time()			
+		elseif DmFindPic("x_xiangzi.bmp",80,799,157,814,172) then
+			click(x,y)
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog("存放完毕")
 			yaodian()
@@ -1010,6 +1012,8 @@ function yaodian()
 			kill()
 			start=os.time()
 			jdwlLog("前往勇者药店超时")
+		elseif DmFindPic("x_xiangzi.bmp",80,799,157,814,172) then
+			click(x,y)			
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('到达勇者药店')
 			break
