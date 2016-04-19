@@ -1616,7 +1616,8 @@ function give()
 		--658,264,669,270
 		--x方向公差93
 		--y方向公差93
-		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
+		--修改之后只交易亮闪闪的东西给对方 4/19修改
+--[[		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2
@@ -1635,7 +1636,22 @@ function give()
 		elseif find_Onequyu(0x782D96,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
-			nz=2							
+			nz=2--]]	
+		--亮闪闪本职业武器	
+		if find_Onequyu(0x912AAE,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			click(x+20,y-20)
+			wz=wz+1
+			nz=2	
+		--亮闪闪晶石
+		elseif find_Onequyu(0x9F34C8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			click(x+20,y-20)
+			wz=wz+1
+			nz=2		
+		--亮闪闪其他职业武器
+		elseif find_Onequyu(0xA62698,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			click(x+20,y-20)
+			wz=wz+1
+			nz=2												
 		else
 			wz=wz+1
 			nz=1
@@ -1702,7 +1718,7 @@ function haiyouma()
 		--658,264,669,270
 		--x方向公差93
 		--y方向公差93
-		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
+--[[		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			wz=wz+1
 			return true
 		elseif find_Onequyu(0xA81B75,80,658+a*93,172+b*93,668+a*93,178+b*93) then
@@ -1716,7 +1732,18 @@ function haiyouma()
 			return true			
 		elseif find_Onequyu(0x782D96,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			wz=wz+1		
-			return true							
+			return true	--]]		
+		if find_Onequyu(0x912AAE,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			wz=wz+1
+			return true
+		--亮闪闪晶石
+		elseif find_Onequyu(0x9F34C8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			wz=wz+1	
+			return true
+		--亮闪闪其他职业武器
+		elseif find_Onequyu(0xA62698,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			wz=wz+1	
+			return true			
 		else
 			wz=wz+1
 		end	
@@ -2847,8 +2874,12 @@ letter_n = {0x007AFF,--146,409;
 --ig一键新机
 function iGrimace()
 	local isnew = 0
+	local tt=os.time()
 	while true do
-		if isnew == 0 and Mulcolor(letter_n,90,146,409,151,511) and Mulcolor(new_iphone,90,823,87,829,90) then
+		if os.difftime(os.time(),tt) > 80 then
+			jdwlLog("IG超时重启")
+			os.execute("reboot")
+		elseif isnew == 0 and Mulcolor(letter_n,90,146,409,151,511) and Mulcolor(new_iphone,90,823,87,829,90) then
 			click(x,y)mSleep(8000)
 			isnew = 1
 --[[		elseif isnew==1 and Mulcolor(letter_n,90,146,409,151,511) then

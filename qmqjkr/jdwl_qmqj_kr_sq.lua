@@ -956,7 +956,7 @@ function cangku()
 		elseif os.difftime(os.time(),starttime) > 180 then
 			kill()
 			jdwlLog("前往仓库超时")
-			start=os.time()			
+			starttime=os.time()			
 		elseif DmFindPic("x_xiangzi.bmp",80,799,157,814,172) then
 			click(x,y)
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
@@ -977,9 +977,13 @@ function cangku()
 		elseif DmFindPic("dakai.bmp",80,410,412,424,425) then
 			click(x,y)
 		elseif wz > 20 and DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
-			if DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
-				click(x,y)
+			local tt=os.time()
+			while os.difftime(os.time(),tt) < 4 do
+				if DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
+					click(x,y)
+				end
 			end
+			mSleep(1000)	
 			if DmFindPic("cangkujiemian.bmp",80,488,569,502,584) then
 				click(1105,42)
 				isok=1
@@ -1080,7 +1084,7 @@ function shou()
 			 tt = os.time()
 			 zheng=0
 			 kazhu=0			
-		elseif count > 20 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
+		elseif count > 60 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			mSleep(500)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
