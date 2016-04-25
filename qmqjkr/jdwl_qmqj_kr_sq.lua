@@ -1089,7 +1089,12 @@ function shou()
 			mSleep(500)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
 				zhengli()
-				cangku()
+				local index=math.random(1,2)
+				if index==1 then
+					cangku()
+				else
+					beibao()
+				end
 				fanhuijuese()
 				count=0
 				kazhu=0
@@ -2004,6 +2009,8 @@ function youjian()
 	end
 end
 
+yichang=0
+
 --断线重连
 function connect()
 
@@ -2035,10 +2042,12 @@ function connect()
 	--有角色直接进入游戏
 	elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587)  then
 		click(x,y)	
-
+	elseif yichang>10 and DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
+		os.execute("reboot")
 	--登录异常刷机
 	elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
 		click(x,y)		
+		yichang=yichang+1
 	--vpn断开连接
 	elseif DmFindPic("vpnlianjie.bmp",85,487,215,527,262) then
 		click(x+83,y+210)
@@ -2130,8 +2139,13 @@ function beibao(purple)
 	local start=os.time()
 	while true do
 		--屏蔽玩家
-		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) then
+		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435)or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)		
+		elseif os.difftime(os.time(),start)>180 then
+			jdwlLog("整理背包超时")
+			kill()
+			start=os.time()
+			count=0
 		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jdwlLog('整理背包完成')
 			break
@@ -2145,11 +2159,11 @@ function beibao(purple)
 			click(x,y)mSleep(500)
 		elseif purple~=nil and DmFindPic('quxiaohuishou.bmp',85,687,586,699,596) and DmFindPic('xuanxiang.bmp',80,271,495,428,534) then
 			click(x,y)mSleep(500)
-		elseif count > 3 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif count > 3 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53))then
 			if DmFindPic('zhengli.bmp',85,1010,586,1023,597) then
 				click(x,y)mSleep(1500)
 			end
-			if DmFindPic('x_cb.bmp',85,1097,39,1110,52) then 
+			if DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53) then 
 				click(x,y)mSleep(500)
 			end
 			isok=1
@@ -2165,7 +2179,7 @@ function beibao(purple)
 			click(x,y)
 		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
 			click(x,y)
-		elseif os.difftime(os.time(),start)	> 30 and DmFindPic('x_cb.bmp',85,1097,39,1110,52) then
+		elseif os.difftime(os.time(),start)	> 30 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53)) then
 			click(x,y)
 			start=os.time()
 		else
@@ -2174,7 +2188,6 @@ function beibao(purple)
 		end
 	end
 end
-
 --整理背包不回收装备
 function zhengli()
 	jdwlLog('整理背包不回收装备')

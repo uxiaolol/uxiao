@@ -90,11 +90,13 @@ function emgcms()
 		zhuxian()
 		guding()
 		beibao()
+		--出售掉玛雅晶石
 		shiyong()
 		jiangli()
 		qifu()
 		zhandouli()
 		emgc()
+		hecheng()
 		beibao("no")
 		if bubangding()==1 then
 			geidongxi()
@@ -135,6 +137,55 @@ function jiangli()
 	--lianxu()
 	--meiri()
 	--youjian()
+end
+
+--出售掉玛雅晶石
+function hecheng()
+	jdwlLog("合成果实")
+	local isok=0
+	local start=os.time()
+	while true do
+		--屏蔽玩家
+		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435)or DmFindPic('dx.bmp',85,519,422,530,438) then
+			click(x,y)
+		elseif os.difftime(os.time(),start)>180 then
+			jdwlLog("合成果实超时")
+			kill()
+			isok=0
+			start=os.time()
+		--强化完成
+		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
+			jdwlLog('合成果实完成')
+			break
+		elseif isok==1 and DmFindPic('x_hecheng.bmp',85,1095,36,1111,50) then
+			click(x,y)
+		--点击炼炉
+		elseif DmFindPic('hecheng.bmp',85,446,52,459,66)  then
+			click(x,y)
+		--点击果实一栏
+		elseif DmFindPic("guoshi.bmp",80,73,179,90,195) then
+			click(x,y)
+		--去掉勾子
+		elseif DmFindPic("gouzi.bmp",80,274,467,295,481) then
+			click(x,y)
+		--点击合成
+		elseif DmFindPic("liangguoshi.bmp",80,73,175,90,190) and DmFindPic("gouzi.bmp",80,274,467,295,481)==false and DmFindPic("hechenganniu.bmp",80,440,580,459,593) then
+			click(x,y)mSleep(400)
+		--菜单栏回缩
+		elseif DmFindPic('hecheng.bmp',85,446,52,459,66)==false and DmFindPic('beibao.bmp',85,846,614,858,626) and DmFindPic('head.bmp',85,12,46,21,57) then
+			click(x,y)mSleep(500)
+			if DmFindPic('hecheng.bmp',85,446,52,459,66) then
+				click(x,y)mSleep(1000)
+			end
+		--材料不够
+		elseif DmFindPic('x_cailiao.bmp',85,732,80,746,95) then
+			click(x,y)
+			isok=1
+		else
+			mSleep(500)
+			connect()
+		end
+	end
 end
 
 --解除锁屏
@@ -647,6 +698,7 @@ function emgc()
 	local cs=os.time()
 	local count=0
 	local clk=0
+	local guwucs=0
 	while true do
 		local sj,ms=emtime()
 		--屏蔽玩家
@@ -654,6 +706,9 @@ function emgc()
 			click(x,y)		cs=os.time()
 		elseif DmFindPic("emfh1.bmp",80,502,364,516,378) or DmFindPic("emfh.bmp",80,499,230,513,247) then
 			click(x,y)
+		elseif ((sj >=25 and sj <45) or (sj >55 or sj <15)) and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('beibao.bmp',85,846,614,858,626) then
+			kill()
+			jdwlLog("屏幕卡住")
 		--进入恶魔广场	
 		elseif ((sj>=16 and sj <17) or (sj>=46 and sj<47)) and DmFindPic('fbxx.bmp',85,996,21,1012,30)==false and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jinru()
@@ -665,6 +720,7 @@ function emgc()
 		elseif os.difftime(os.time(),isguwu) > 122 and DmFindPic('beibao.bmp',85,846,614,858,626) and DmFindPic('guwu.bmp',85,950,351,960,360) then
 			click(x,y)
 			cs=os.time()
+			guwucs=guwucs+1
 		--鼓舞确定
 		elseif DmFindPic('guwuqueding.bmp',85,548,421,562,431) then
 			click(x,y)
@@ -1565,13 +1621,46 @@ function xunzhao()
 		--x方向公差93
 		--y方向公差93
 		if find_Onequyu(0x9433B8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			notifyMsg(wz)
 			return true
 		elseif find_Onequyu(0xA81B75,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			notifyMsg(wz)	
 			return true
 		elseif find_Onequyu(0x992398,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			notifyMsg(wz)	
 			return true
 		elseif find_Onequyu(0xAE31AE,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			notifyMsg(wz)	
 			return true
+		--果实部分
+		--652,102,733,183 --744,102,825,183
+		--652,195,733,275
+		elseif DmFindPic("tili.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
+			notifyMsg(wz)	
+			return true
+		elseif DmFindPic("minjie.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
+			notifyMsg(wz)	
+			return true
+		elseif DmFindPic("zhili.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
+			notifyMsg(wz)	
+			return true
+		elseif DmFindPic("liliang.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
+			notifyMsg(wz)	
+			return true
+		--以下4/19更改	
+--[[		if find_Onequyu(0xB03DCE,85,658+a*93,172+b*93,668+a*93,178+b*93) then --0x912AAE 0xB03DCE
+			wz=wz+1
+			return true--]]
+--[[		--亮闪闪晶石
+		elseif find_Onequyu(0x9F34C8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			wz=wz+1	
+			click(x,y)
+			return true
+		--亮闪闪其他职业武器
+		elseif find_Onequyu(0xA62698,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			wz=wz+1	
+			click(x,y)
+			return true	--]]			
 		elseif DmFindPic('jiaoyitishi.bmp',85,462,429,475,441) then--658,434
 			click(658,434)			
 		else
@@ -1617,7 +1706,7 @@ function give()
 		--x方向公差93
 		--y方向公差93
 		--修改之后只交易亮闪闪的东西给对方 4/19修改
---[[		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
+		if find_Onequyu(0x9433B8,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2
@@ -1636,14 +1725,34 @@ function give()
 		elseif find_Onequyu(0x782D96,80,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
-			nz=2--]]	
-		--亮闪闪本职业武器	
-		if find_Onequyu(0x912AAE,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+			nz=2	
+		--果实部分
+		--652,102,733,183 --744,102,825,183
+		--652,195,733,275
+		elseif DmFindPic("tili.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2	
+		elseif DmFindPic("minjie.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
+			click(x+20,y-20)
+			wz=wz+1
+			nz=2	
+		elseif DmFindPic("zhili.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
+			click(x+20,y-20)
+			wz=wz+1
+			nz=2	
+		elseif DmFindPic("liliang.bmp",85,652+a*93,102+b*93,733+a*93,183+b*93) then
+			click(x+20,y-20)
+			wz=wz+1
+			nz=2			
+		--以下4/19更改	
+		--亮闪闪本职业武器	
+--[[		if find_Onequyu(0xB03DCE,85,658+a*93,172+b*93,668+a*93,178+b*93) then--0xB03DCE  0x912AAE
+			click(x+20,y-20)
+			wz=wz+1
+			nz=2	--]]
 		--亮闪闪晶石
-		elseif find_Onequyu(0x9F34C8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
+--[[		elseif find_Onequyu(0x9F34C8,85,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
 			nz=2		
@@ -1651,7 +1760,7 @@ function give()
 		elseif find_Onequyu(0xA62698,85,658+a*93,172+b*93,668+a*93,178+b*93) then
 			click(x+20,y-20)
 			wz=wz+1
-			nz=2												
+			nz=2	--]]											
 		else
 			wz=wz+1
 			nz=1
@@ -1676,7 +1785,15 @@ function give()
 				count = count + 1
 			--放入单个生命
 			elseif DmFindPic('fangru4.bmp',85,820,276,832,288) then
-				click(x,y) 
+				click(x,y) 	
+				count = count + 1
+			--放入单个果实
+			elseif DmFindPic("fangru5.bmp",85,822,349,836,359) then
+				click(x,y)
+				count = count + 1
+			--放入多个果实
+			elseif DmFindPic("fangru6.bmp",85,823,381,839,395) then
+				click(x,y)
 				count = count + 1
 			elseif DmFindPic('x_weizhijiaoyi.bmp',85,1096,37,1109,51) then
 				click(x,y)
@@ -2552,7 +2669,7 @@ end
 --退出游戏
 function tuichu()
 	jdwlLog('退出游戏')
-	local shuru=0
+--[[	local shuru=0
 	local cuowu=0
 	local start=os.time()
 	while true do
@@ -2580,8 +2697,8 @@ function tuichu()
 		elseif DmFindPic('xitongshezhi.bmp',85,845,167,856,177) then
 			click(x,y)
 		--返回登录界面
---[[		elseif DmFindPic('fanhui.bmp',85,526,232,539,244) then
-			click(x,y)--]]
+--		elseif DmFindPic('fanhui.bmp',85,526,232,539,244) then
+			click(x,y)
 		--返回角色选择
 		elseif DmFindPic('fanhuijuese.bmp',85,502,363,515,374) then
 			click(x,y)
@@ -2642,6 +2759,9 @@ function tuichu()
 			connect()
 		end
 	end
+--]]
+	kill()
+	iGrimace()
 end
 --整理背包
 function beibao(purple)
@@ -2691,7 +2811,7 @@ function beibao(purple)
 			click(x,y)
 		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then
 			click(x,y)
-		elseif os.difftime(os.time(),start)	> 30 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53)) then
+		elseif os.difftime(os.time(),start) > 30 and (DmFindPic('x_cb.bmp',85,1097,39,1110,52) or DmFindPic('x_cb1.bmp',85,1095,38,1112,53)) then
 			click(x,y)
 			start=os.time()
 		else
@@ -2709,6 +2829,7 @@ function shiyong()
 	local wz = 1
 	local isok=0	
 	local start=os.time()
+	local maya=0
 	while true do
 		mSleep(200)
 		if wz <= 5 then
@@ -2750,6 +2871,10 @@ function shiyong()
 			click(690+a*93,146+b*93)
 			wz = wz + 1
 			mSleep(500)
+		--出售绑定玛雅	
+		elseif DmFindPic("maya.bmp",80,460,220,478,236) and DmFindPic("suo.bmp",80,436,251,447,260) then
+			click(833,477)
+			maya=1
 		--药品
 		elseif DmFindPic('yaoping.bmp',85,448,298,470,318) then--795,118
 			click(x+347,y-180)
@@ -2765,6 +2890,9 @@ function shiyong()
 			click(x,y)
 		elseif DmFindPic('shiyong.bmp',85,824,460,836,474) or DmFindPic('shiyong1.bmp',85,825,421,835,432) then
 			click(x,y)
+		elseif maya==1 and DmFindPic('guizhongwuping.bmp',85,636,429,648,439) then
+			click(487,437)
+			maya=0
 		--点到贵重物品
 		elseif DmFindPic('guizhongwuping.bmp',85,636,429,648,439) then
 			click(x,y)mSleep(500)

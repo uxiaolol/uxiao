@@ -99,7 +99,7 @@ function richang()
 		five = 0	
 		denglu()--登录游戏
 		levelup()--练级/领取指引/整理背包/提升技能/替换玉面狐狸
-		fuli()
+		--fuli()
 		zawu()
 		fangsheng()
 		--加帮派
@@ -2508,21 +2508,21 @@ function youjian()
 		--点击好友
 		elseif DmFindPic('haoyou.bmp',85,38,426,50,437) or DmFindPic('haoyou1.bmp',85,36,426,49,438) then
 			click(x,y)
-		elseif (i > 4 or count > 4) and DmFindPic('youjianhei.bmp',85,439,102,450,116) then
+		elseif (i > 4 or count > 4) and DmFindPic('youjianhei.bmp',85,436,101,447,113) then
 			closewin()
 			isok=1
 		--使用
 		elseif DmFindPic('shiyong.bmp',85,982,508,995,521) then
 			click(x,y)mSleep(1500)			
 		--打开邮件
-		elseif DmFindPic('youjian.bmp',85,438,102,452,112) then
+		elseif DmFindPic('youjian.bmp',85,438,102,452,112) or DmFindPic("youjian1.bmp",80,437,102,452,112) then
 			click(x,y)
 		--领取邮件
 		elseif DmFindPic('lingquyoujian.bmp',85,749,541,763,556) then
 			click(x,y)
 			count = count + 1
 		--选中邮件之后开始领取
-		elseif DmFindPic('youjianhei.bmp',85,439,102,450,116) then
+		elseif DmFindPic('youjianhei.bmp',85,436,101,447,113) then
 			click(404,196+(i-1)*60)
 			i=i+1
 --[[		--已领取
@@ -2629,10 +2629,10 @@ function chushou()
 		elseif DmFindPic('yaoping.bmp',80,665,150,676,161) or DmFindPic('wuping.bmp',80,663,148,678,164) or DmFindPic('wuping1.bmp',85,669,149,680,156) or DmFindPic("wuping2.bmp",85,663,148,674,158) then--701,190
 			click(x+35,y+40)mSleep(2000)
 		--当前商品没有其他玩家出售
-		elseif DmFindPic('meiyou.bmp',85,667,263,686,284) and DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
+		elseif DmFindPic('meiyou.bmp',85,667,263,686,284) and DmFindPic('shangjiachushou.bmp',80,429,550,441,560) then
 			click(x,y)
 		--调整出售价格和其他玩家出售价格一致
-		elseif equal == 1 and DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
+		elseif equal == 1 and DmFindPic('shangjiachushou.bmp',80,429,550,441,560) then
 			click(x,y)
 			equal = 0
 			can = 0
@@ -2641,7 +2641,7 @@ function chushou()
 			jian = 0
 			tt=os.time()
 			cs=cs+1
-		elseif cz > 5 and DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
+		elseif cz > 5 and DmFindPic('shangjiachushou.bmp',80,429,550,441,560) then
 			equal =1
 			cz = 0
 		--降价
@@ -2657,7 +2657,7 @@ function chushou()
 			cz=cz+1
 			tt=os.time()
 		--上架出售
-		elseif DmFindPic('shangjiachushou.bmp',80,410,546,422,560) then
+		elseif DmFindPic('shangjiachushou.bmp',80,429,550,441,560) then
 			can=cankao()
 			shiji = juti()
 			if string.len(tostring(can))==string.len(tostring(shiji)) then
@@ -2811,12 +2811,12 @@ function jiayuan()
 		elseif count>5 and DmFindPic('baoguo.bmp',85,1086,522,1099,533) then
 			jdwlLog("建造家园完成")
 			break
-		elseif DmFindPic('jineng.bmp',85,918,586,929,597) and (DmFindPic("jiayuan.bmp",85,837,586,849,595)==false or DmFindPic("jiayuan1.bmp",85,838,596,849,605)==false) then
-			jdwlLog("未达到条件")
-			break
 		--点击家园
 		elseif rw==0 and DmFindPic("jiayuan.bmp",85,837,586,849,595) or DmFindPic("jiayuan1.bmp",85,838,596,849,605) then
-			click(x,y)			
+			click(x,y)					
+		elseif DmFindPic('jineng.bmp',85,918,586,929,597) and (DmFindPic("jiayuan.bmp",85,837,586,849,595)==false or DmFindPic("jiayuan1.bmp",85,838,596,849,605)==false) then
+			jdwlLog("未达到条件")
+			break	
 		--房屋建造任务
 		elseif isMoveing()==false and DmFindPicFuzzy("wu.bmp",85,920,161,980,453,0xffffff) then
 			click(x,y)
@@ -2880,11 +2880,11 @@ function huijia()
 		if DmFindPic("putongtingyuan.bmp",80,102,28,121,50) then
 			jdwlLog("回家成功")
 			break
+		elseif DmFindPic("jiayuan.bmp",85,837,586,849,595) or DmFindPic("jiayuan1.bmp",85,838,596,849,605) then
+			click(x,y)					
 		elseif DmFindPic('jineng.bmp',85,918,586,929,597) and (DmFindPic("jiayuan.bmp",85,837,586,849,595)==false or DmFindPic("jiayuan1.bmp",85,838,596,849,605)==false) then
 			jdwlLog("回家制药未达到条件")
-			break			
-		elseif DmFindPic("jiayuan.bmp",85,837,586,849,595) or DmFindPic("jiayuan1.bmp",85,838,596,849,605) then
-			click(x,y)			
+			break				
 		elseif DmFindPic('caidan.bmp',85,1077,591,1085,600) then
 			click(x,y)mSleep(1000)
 		--对话框遮挡住菜单栏
