@@ -74,10 +74,18 @@ function io.list7()
 		end
 	end
 end
+version="2016/04/28"
+function ver()
+	local j=0
+	for j=1,5 do
+		notifyMsg(version)
+	end
+end
 
 function main()
 	mSleep(2000)
 	unlock()
+	ver()
 	rotateScreen(90)
 	emgcms()
 end
@@ -95,6 +103,11 @@ function emgcms()
 		jiangli()
 		qifu()
 		zhandouli()
+		if getShiqu() == "no" then
+			shiqu()
+		else
+			notifyMsg("当前设置不拾取紫装")
+		end
 		emgc()
 		hecheng()
 		beibao("no")
@@ -102,6 +115,19 @@ function emgcms()
 			geidongxi()
 		end
 		tuichu()
+	end
+end
+
+--获取拾取文档
+function getShiqu()
+	local file,ret
+	flag = ftpGet("ftp://192.168.1.200/lua/shiqu.txt", "/var/touchelf/scripts/shiqu.txt", "jdwl", "jdwl2014") -- 将FTP服务器192.168.1.100上路径为/a.txt的文件下载到/var/touchelf/a.txt
+	if flag then
+		file = io.open("/var/touchelf/scripts/shiqu.txt","r")
+		ret=file:read()
+		return ret
+	else
+		return "no"
 	end
 end
 
@@ -706,11 +732,11 @@ function emgc()
 			click(x,y)		cs=os.time()
 		elseif DmFindPic("emfh1.bmp",80,502,364,516,378) or DmFindPic("emfh.bmp",80,499,230,513,247) then
 			click(x,y)
-		elseif ((sj >=25 and sj <45) or (sj >55 or sj <15)) and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('beibao.bmp',85,846,614,858,626) then
+--[[		elseif ((sj >=30 and sj <40) or (sj >0 or sj <10)) and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			kill()
-			jdwlLog("屏幕卡住")
+			jdwlLog("屏幕卡住")--]]
 		--进入恶魔广场	
-		elseif ((sj>=16 and sj <17) or (sj>=46 and sj<47)) and DmFindPic('fbxx.bmp',85,996,21,1012,30)==false and DmFindPic('beibao.bmp',85,846,614,858,626) then
+		elseif ((sj>=15 and sj <17) or (sj>=45 and sj<47)) and DmFindPic('fbxx.bmp',85,996,21,1012,30)==false and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			jinru()
 			isguwu = os.time()
 			isboss=0
@@ -730,10 +756,10 @@ function emgc()
 		elseif DmFindPic('guwuquxiao.bmp',85,635,394,646,409) then
 			click(x,y)	
 			cs=os.time()		
-		elseif clk>5 and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
+--[[		elseif clk>5 and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
 			kill()
 			clk=0
-			jdwlLog("卡死了")
+			jdwlLog("卡死了")--]]
 		elseif isboss==0 and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('kaishiguaji.bmp',85,944,452,958,460) then
 			click(x,y)
 			isguwu=os.time()
@@ -999,9 +1025,8 @@ function goumai()
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
-		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
-			jdwlLog('恶魔凭证购买完成')
-			return qian
+		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587) then			
+			click(x,y)
 		elseif os.difftime(os.time(),start) > 180 then
 			kill()
 			jdwlLog("购买恶魔凭证超时")
@@ -1010,6 +1035,9 @@ function goumai()
 			isok=0
 			qian=0
 			start=os.time()
+		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
+			jdwlLog('恶魔凭证购买完成')
+			return qian			
 		elseif isok==1 and DmFindPic('x_shangcheng.bmp',85,1092,35,1104,47) then
 			click(x,y)
 		--如果还停留在恶魔进入界面则关闭
@@ -2763,6 +2791,48 @@ function tuichu()
 	kill()
 	iGrimace()
 end
+
+--拾取设置
+function shiqu()
+	jdwlLog("拾取设置")
+	local tt=os.time()
+	local isok=0
+	while true do
+		if os.difftime(os.time(),tt) > 90 then
+			kill()
+			jdwlLog("拾取设置超时")
+			tt=os.time()
+		elseif isok==1 and DmFindPic('beibao.bmp',85,846,614,858,626) then
+			jdwlLog("拾取设置完成")
+			break
+		elseif isok==1 and (DmFindPic("x_shiqu.bmp",80,824,79,836,89) or DmFindPic("x_guaji.bmp",80,1096,36,1108,48) )then
+			click(x,y)
+		elseif DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
+			click(x,y)	
+		--点击挂机设置
+		elseif DmFindPic("guajishezhi.bmp",80,932,138,943,149) then
+			click(x,y)
+		--取消紫装拾取
+		elseif DmFindPic("shiquzizhuang.bmp",80,636,242,650,259) then
+			click(x,y)mSleep(1000)
+		--紫装拾取勾选完毕
+		elseif DmFindPic("zizhuang.bmp",80,681,239,698,254) and DmFindPic("heise.bmp",80,636,238,653,256) then
+			isok=1
+		--点击拾取设置
+		elseif DmFindPic("shiqushezhi.bmp",80,738,593,755,606) then
+			click(x,y)
+		--点击功能按钮
+		elseif DmFindPic('gongneng.bmp',85,805,63,818,74) then
+			click(x,y)
+		--菜单栏回缩
+		elseif DmFindPic('fuli.bmp',85,652,40,662,48)==false and DmFindPic('beibao.bmp',85,846,614,858,626) and DmFindPic('head.bmp',85,12,46,21,57) then
+			click(x,y)mSleep(1000)			
+		else
+			connect()
+		end
+	end
+end
+
 --整理背包
 function beibao(purple)
 	jdwlLog('整理背包')

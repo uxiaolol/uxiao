@@ -1083,7 +1083,9 @@ function shou()
 			 jy=0
 			 tt = os.time()
 			 zheng=0
-			 kazhu=0			
+			 kazhu=0		
+		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587) then
+			click(x,y)				
 		elseif count > 60 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			mSleep(500)
