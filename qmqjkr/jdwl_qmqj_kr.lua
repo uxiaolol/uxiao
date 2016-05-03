@@ -74,7 +74,7 @@ function io.list7()
 		end
 	end
 end
-version="2016/05/02_2"
+version="2016/05/03_1"
 function ver()
 	local j=0
 	for j=1,5 do
