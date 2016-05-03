@@ -75,16 +75,47 @@ function io.list7()
 	end
 end
 
+--[[UI = {
+        { 'TextView{##设置开机启动之后如需修改时间请}'},
+		{ 'TextView{取消开机启动再设置##}'},
+        { 'DropList{1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|0}',        'timehour', '时间:' },
+};--]]
+
+version="2016/05/01_1"
+function ver()
+	local j=0
+	for j=1,5 do
+		notifyMessage(string.format("当前版本为%s,关机时间为%s",version,timehour))
+	end
+end
+
 function main()
 	mSleep(2000)
 	unlock()
 	rotateScreen(90)
+	ver()
 	denglu()
 	zhuxian()
 	beibao("no")
 	cangku()	
 	shouqian()
+end
 
+--获取当前时
+function hours()
+	local tm=os.date("*t")
+	return tm.hour,tm.min
+end
+
+function finishi()
+	local tt=hours()
+	if tostring(tt) > timehour then
+		kill()
+		while true do
+			notifyMsg("收钱完毕")
+		end
+	end	
+	
 end
 
 --恶魔广场模式
@@ -1032,7 +1063,6 @@ function yaodian()
 		--药店老板莱亚
 		elseif DmFindPic('laiya.bmp',85,901,420,914,438) or DmFindPic('laiya1.bmp',85,896,415,909,434) then
 			click(x+5,y+5)mSleep(500)
-			
 		--到达莱亚
 		elseif DmFindPic('x_laiya.bmp',85,1003,224,1014,234) then
 			click(x,y)
@@ -1070,6 +1100,7 @@ function shou()
 	local zheng=0
 	local kazhu=0
 	while true do
+		--finishi()
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438) then
 			click(x,y)	
@@ -1086,29 +1117,36 @@ function shou()
 			 kazhu=0		
 		elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587) then
 			click(x,y)				
-		elseif count > 60 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
+		elseif count > 80 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)
 			mSleep(500)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
 				zhengli()
-				local index=math.random(1,2)
-				if index==1 then
-					cangku()
-				else
-					beibao()
-				end
+				cangku()
 				fanhuijuese()
 				count=0
 				kazhu=0
+				cs=os.time()
 			else
 				kazhu=kazhu+1
 			end
 		elseif os.difftime(os.time(),tt) > 300 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
-			click(x,y)
+			click(x,y)mSleep(1000)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
 				zhengli()
-			end
-			tt=os.time()			
+				tt=os.time()			
+			else
+				kill()
+				jdwlLog("5分钟没人说话关闭聊天窗口")
+				start=os.time()
+				count=0
+				zl=os.time()
+				cs=os.time()
+				jy=0
+				tt = os.time()
+				zheng=0
+				kazhu=0						
+			end			
 		--打开聊天
 		elseif DmFindPic('liaotian.bmp',85,751,590,777,601) then
 			click(x,y)	
@@ -1127,7 +1165,7 @@ function shou()
 			cs=os.time()
 		--查看密语
 		elseif DmFindPic('fasong.bmp',85,953,586,971,600) and DmFindPicFuzzy('siliao.bmp',85,246,408,291,535,0xffffff) then--329,422
-			click(x+83,y+14)
+			click(x+45,y+14)
 			count = count + 1
 			zl=os.time()
 			mSleep(3000)
