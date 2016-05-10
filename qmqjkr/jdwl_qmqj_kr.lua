@@ -74,12 +74,9 @@ function io.list7()
 		end
 	end
 end
-version="2016/05/03_1"
+version="2016/05/10_1"
 function ver()
-	local j=0
-	for j=1,5 do
-		notifyMsg(version)
-	end
+	notifyMsg(version)
 end
 
 function main()
@@ -98,16 +95,20 @@ function emgcms()
 		zhuxian()
 		guding()
 		beibao()
+		beibao()
 		--出售掉玛雅晶石
 		shiyong()
 		jiangli()
 		qifu()
 		zhandouli()
+		beibao()
+		shiyong()
 		if getShiqu() == "no" then
 			shiqu()
 		end
 		emgc()
 		hecheng()
+		mSleep(5000)
 		beibao("no")
 		if bubangding()==1 then
 			geidongxi()
@@ -733,9 +734,9 @@ function emgc()
 			click(x,y)		cs=os.time()
 		elseif DmFindPic("emfh1.bmp",80,502,364,516,378) or DmFindPic("emfh.bmp",80,499,230,513,247) then
 			click(x,y)
-		elseif kz > 5 and ((sj >=30 and sj <44) or (sj >0 and sj <14)) and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('beibao.bmp',85,846,614,858,626) then
+		elseif kz > 30 and ((sj >=30 and sj <43) or (sj >0 and sj <13)) and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			os.execute("reboot")
-		elseif ((sj >=30 and sj <44) or (sj >0 and sj <14)) and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('beibao.bmp',85,846,614,858,626) then
+		elseif ((sj >=30 and sj <43) or (sj >0 and sj <13)) and DmFindPic('fbxx.bmp',85,996,21,1012,30) and DmFindPic('beibao.bmp',85,846,614,858,626) then
 			kz=kz+1
 			mSleep(1000)
 		--进入恶魔广场	
@@ -750,6 +751,7 @@ function emgc()
 			click(x,y)
 			cs=os.time()
 			guwucs=guwucs+1
+			kz=0
 		--鼓舞确定
 		elseif DmFindPic('guwuqueding.bmp',85,548,421,562,431) or DmFindPic("guwuqueding1.bmp",80,461,396,474,410)	then
 			click(x,y)
@@ -1431,8 +1433,12 @@ function jiaoyi()
 			if DmFindPic('fasong.bmp',85,953,586,971,600) then
 				click(x-137,y+5)mSleep(1000)
 				local name = getname()
-				inputText(name.." zai")
-				issay=1
+				if name~=nil then
+					inputText(name.." zai")
+					issay=1
+				else
+					notifyMsg("name error")
+				end
 				start=os.time()
 			end	
 		--发送说话
@@ -1583,61 +1589,67 @@ function getname()
     if flag then
         notifyMessage("下载成功")
 		file = io.open("/var/touchelf/scripts/name.txt","r")
-			for l in file:lines() do
-				local name=Split(l,",")
-				local index=tonumber(name[2])
-				local tm,tmin=hours()
-				if (tm >= 0 and tm<1) and index==1 then
-					return name[1]
-				elseif (tm >= 1 and tm <2) and index==2 then
-					return name[1]
-				elseif (tm >=2  and tm <3) and index==3 then
-					return name[1]
-				elseif (tm >=3 and tm <4) and index==4 then
-					return name[1]
-				elseif (tm >=4 and tm <5) and index==5 then
-					return name[1]
-				elseif (tm >=5 and tm <6) and index==6 then
-					return name[1]
-				elseif (tm >=6 and tm <7) and index==7 then
-					return name[1]
-				elseif (tm >=7 and tm <8) and index==8 then
-					return name[1]
-				elseif (tm >=8 and tm <9) and index==9 then
-					return name[1]
-				elseif (tm >=9 and tm <10) and index==10 then
-					return name[1]	
-				elseif (tm >=10 and tm <11) and index==11 then
-					return name[1]		
-				elseif (tm >=11 and tm <12) and index==12 then
-					return name[1]		
-				--二十四小时制		
-				elseif (tm >=12 and tm <13) and index==13 then
-					return name[1]		
-				elseif (tm >=13 and tm <14) and index==14 then
-					return name[1]		
-				elseif (tm >=14 and tm <15) and index==15 then
-					return name[1]		
-				elseif (tm >=15 and tm <16) and index==16 then
-					return name[1]			
-				elseif (tm >=16 and tm <17) and index==17 then
-					return name[1]		
-				elseif (tm >=17 and tm <18) and index==18 then
-					return name[1]		
-				elseif (tm >=18 and tm <19) and index==19 then
-					return name[1]		
-				elseif (tm >=19 and tm <20) and index==20 then
-					return name[1]		
-				elseif (tm >=20 and tm <21) and index==21 then
-					return name[1]		
-				elseif (tm >=21 and tm <22) and index==22 then
-					return name[1]		
-				elseif (tm >=22 and tm <23) and index==23 then
-					return name[1]		
-				elseif (tm >=23 and tm <0) and index==24 then
-					return name[1]			
+			if file then
+				for l in file:lines() do
+					local name=Split(l,",")
+					local index=tonumber(name[2])
+					local tm,tmin=hours()
+					if (tm >= 0 and tm<1) and index==1 then
+						return name[1]
+					elseif (tm >= 1 and tm <2) and index==2 then
+						return name[1]
+					elseif (tm >=2  and tm <3) and index==3 then
+						return name[1]
+					elseif (tm >=3 and tm <4) and index==4 then
+						return name[1]
+					elseif (tm >=4 and tm <5) and index==5 then
+						return name[1]
+					elseif (tm >=5 and tm <6) and index==6 then
+						return name[1]
+					elseif (tm >=6 and tm <7) and index==7 then
+						return name[1]
+					elseif (tm >=7 and tm <8) and index==8 then
+						return name[1]
+					elseif (tm >=8 and tm <9) and index==9 then
+						return name[1]
+					elseif (tm >=9 and tm <10) and index==10 then
+						return name[1]	
+					elseif (tm >=10 and tm <11) and index==11 then
+						return name[1]		
+					elseif (tm >=11 and tm <12) and index==12 then
+						return name[1]		
+					--二十四小时制		
+					elseif (tm >=12 and tm <13) and index==13 then
+						return name[1]		
+					elseif (tm >=13 and tm <14) and index==14 then
+						return name[1]		
+					elseif (tm >=14 and tm <15) and index==15 then
+						return name[1]		
+					elseif (tm >=15 and tm <16) and index==16 then
+						return name[1]			
+					elseif (tm >=16 and tm <17) and index==17 then
+						return name[1]		
+					elseif (tm >=17 and tm <18) and index==18 then
+						return name[1]		
+					elseif (tm >=18 and tm <19) and index==19 then
+						return name[1]		
+					elseif (tm >=19 and tm <20) and index==20 then
+						return name[1]		
+					elseif (tm >=20 and tm <21) and index==21 then
+						return name[1]		
+					elseif (tm >=21 and tm <22) and index==22 then
+						return name[1]		
+					elseif (tm >=22 and tm <23) and index==23 then
+						return name[1]		
+					elseif (tm >=23 and tm <0) and index==24 then
+						return name[1]		
+					else
+						return "muyou"
+					end	
 				end	
-			end		
+			else
+				return "muyou"
+			end	
     else
         notifyMessage("下载失败")
 		return "muyo"
@@ -1646,6 +1658,7 @@ function getname()
 	--[[sname = file:read()
 	return sname--]]
 end
+
 
 --寻找背包不绑定的材料
 function xunzhao()
@@ -2008,6 +2021,7 @@ function chibang()
 	local isbuy=0
 	local start=os.time()
 	local count=0
+	local cnt=0
 	while true do
 		--屏蔽玩家
 		if DmFindPic('yanjing.bmp',85,1033,216,1044,226) or DmFindPic('diaoxian.bmp',85,534,424,546,435) or DmFindPic('dx.bmp',85,519,422,530,438)then
@@ -2037,10 +2051,13 @@ function chibang()
 		--点击翅膀
 		elseif DmFindPic('zhengli.bmp',85,1010,586,1023,597) and DmFindPic('chibang.bmp',85,74,437,95,454) then
 			click(x,y)mSleep(3000)
+		elseif cnt > 2 and DmFindPic('yijie.bmp',80,179,139,189,158) then
+			isok=1
 		--翅膀一阶需要购买火种
 		elseif isbuy==0 and DmFindPic('yijie.bmp',80,179,139,189,158) then
 			huozhong()
 			isbuy=1
+			cnt=cnt+1
 		--自动提升
 		elseif isok==0 and (DmFindPic('zidongtisheng.bmp',85,778,566,787,578) or DmFindPic('zidongtisheng1.bmp',85,787,571,799,581))then
 			click(x+10,y)
@@ -2494,6 +2511,9 @@ function leiji()
 		elseif DmFindPic('leijiliang.bmp',85,90,383,109,406) then
 			myMove_UD(921,583,919,388,10)mSleep(500)
 			count = count + 1
+		--点到祝福晶石
+		elseif DmFindPic("x_zhufu.bmp",80,783,142,797,158) then
+			click(x,y)
 		--领奖灰关闭窗口
 --[[		elseif DmFindPic('x_heifuli.bmp',85,1096,40,1111,51) then
 			click(x,y)	--]]		
@@ -2545,6 +2565,9 @@ function dengji()
 		elseif DmFindPic('dengjiliang.bmp',85,103,246,124,269) then
 			myMove_UD(652,520,875,420,10)mSleep(1000)
 			count = count + 1
+		--点到祝福晶石
+		elseif DmFindPic("x_zhufu.bmp",80,783,142,797,158) then
+			click(x,y)			
 		--领奖灰关闭窗口
 --[[		elseif DmFindPic('x_heifuli.bmp',85,1096,40,1111,51) then
 			click(x,y)	--]]		
@@ -3345,7 +3368,7 @@ function DmFindPic(pic,per,x1,y1,x2,y2)
 		x, y = findImageInRegionFuzzy(PIC_PATH..pic, per, x1-5,y1-5,x2-5,y2-5)
 		if x~=-1 and y~=-1 then	
 			keepScreen(false)	
-			logDebug(pic)
+		--	logDebug(pic)
 			return true		
 		else
 			keepScreen(false)

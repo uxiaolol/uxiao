@@ -123,9 +123,9 @@ function richang()
 		--使用宝图
 		shiyongbaotu()
 		--建造家园
-		jiayuan()
+		--jiayuan()
 		--回家
-		huijia()
+		--huijia()
 		--做药
 		zhiyao()
 		--福利
@@ -139,9 +139,9 @@ function richang()
 		--下线
 		exit()
 		--断网
-		router()
+		--router()
 		--IG留存
-		iGhistory()
+		--iGhistory()
 	end	
 end
 
@@ -1523,7 +1523,7 @@ end
 
 --领取玉面狐狸
 function huli()
-	jdwlLog('领取玉面狐狸')
+--[[	jdwlLog('领取玉面狐狸')
 	local isok=0
 	local tt = os.time()
 	while true do
@@ -1552,16 +1552,15 @@ function huli()
 			closewin()
 			isok=1
 		else
-			--[[close()--]]
 			mSleep(500)
 			connect()
 		end
-	end	
+	end	--]]
 end
 
 --替换玉面狐狸上阵
 function tihuan()
-	jdwlLog('替换玉面狐狸')
+--[[	jdwlLog('替换玉面狐狸')
 	local sppick=0
 	local wz=0
 	local tt=os.time()
@@ -1606,7 +1605,7 @@ function tihuan()
 			mSleep(500)
 			connect()
 		end
-	end
+	end--]]
 end
 
 --升级技能
@@ -2183,6 +2182,7 @@ function huoli()
 	local isok = 0
 	local count = 0
 	local tt=os.time()
+	local cs=0
 	while true do
 		if os.difftime(os.time(),tt) > 180 then
 			jdwlLog('学习中药医理超时')
@@ -2216,8 +2216,8 @@ function huoli()
 			click(x,y)
 			count = count + 1
 		--点击中药医理
-		elseif DmFindPic('zhongyi.bmp',85,338,213,350,224) then
-			click(x,y)
+		elseif DmFindPic('zhongyi.bmp',85,253,248,269,261) then
+			click(x+50,y)
 		--相差不能超过10级
 		elseif DmFindPic('dengji10.bmp',85,605,293,622,309) then
 			notifyMsg('相差不能超过10级')
@@ -2228,12 +2228,15 @@ function huoli()
 			notifyMsg('帮贡不够')
 			closewin()
 			isok=1
+		elseif DmFindPic('zhongyixuanzhong.bmp',85,253,253,266,269) and cs > 20 then
+			isok=1
 		--选中中医
-		elseif DmFindPic('zhongyixuanzhong.bmp',85,333,207,350,221) and (DmFindPic('xuexijineng.bmp',85,458,553,469,569) or DmFindPic('xuexijineng1.bmp',85,462,552,475,567) )then
+		elseif DmFindPic('zhongyixuanzhong.bmp',85,253,253,266,269) and (DmFindPic('xuexijineng.bmp',85,457,551,467,565) or DmFindPic('xuexijineng1.bmp',85,462,552,475,567) )then
 			click(x,y)mSleep(1000)
+			cs=cs+1
 			tt=os.time()
 		--银币不够
-		elseif DmFindPic('x_xiaofei.bmp',85,766,219,780,233) then
+		elseif  DmFindPic('x_xiaofei.bmp',85,766,219,780,233) then
 			click(x,y)
 			isok = 1			
 		else
