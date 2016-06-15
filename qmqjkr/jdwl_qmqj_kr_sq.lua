@@ -81,7 +81,7 @@ end
         { 'DropList{1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|0}',        'timehour', '时间:' },
 };--]]
 
-version="2016/05/01_1"
+version="2016/05/28_1"
 function ver()
 	local j=0
 	for j=1,5 do
@@ -295,12 +295,12 @@ function denglu()
 		--创建角色之后弹出个不认识的框
 		elseif DmFindPic('burenshi.bmp',85,549,226,561,237) and DmFindPic('burenshiqueding.bmp',85,639,429,651,437) then
 			click(x,y)
-		elseif DmFindPic('kaishizhengcheng.bmp',85,795,464,806,473) and count>5 then	
+		elseif DmFindPic('kaishizhengcheng.bmp',85,821,460,834,474) and count>5 then	
 			kill()
 			jdwlLog("开始征程卡住了")
 			count=0
 		--开始征程
-		elseif DmFindPic('kaishizhengcheng.bmp',85,795,464,806,473) then
+		elseif DmFindPic('kaishizhengcheng.bmp',85,821,460,834,474) then
 			click(x,y)
 			count=count+1
 			mSleep(1000)
@@ -320,8 +320,10 @@ function denglu()
 		--电池启动
 		elseif DmFindPic('dianchi.bmp',85,20,68,31,77) then
 			run()	
-		elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
-			click(x,y)
+		--登录异常
+		elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498) or DmFindPic("dengluyichang1.bmp",80,547,487,562,500) then
+			click(x,y)mSleep(1000)		
+			
 		elseif DmFindPic('x_duihua.bmp',85,1004,219,1016,232) then			
 			click(x,y)			
 			
@@ -542,7 +544,13 @@ function zhuxian()
 		elseif DmFindPic("huichengfuhuo.bmp",85,500,363,516,377) then
 			click(x,y)	mSleep(5000)
 		elseif DmFindPic('x_fuli1.bmp',85,1096,39,1110,54) then
-			click(x,y)					
+			click(x,y)		
+		--离开恶魔广场确定		
+		elseif DmFindPic("likaima.bmp",80,579,345,591,369) and DmFindPic("likaiqueding.bmp",80,459,391,472,409) then
+			click(x,y)				
+		--任务恶魔广场
+		elseif DmFindPic("mingxiang.bmp",80,383,519,395,533) and DmFindPic("emoditu.bmp",80,996,18,1008,29) and DmFindPic("likaiemo.bmp",80,902,31,914,48) then
+			click(x,y)							
 		else
 			mSleep(300)
 			connect()
@@ -1121,8 +1129,8 @@ function shou()
 			click(x,y)
 			mSleep(500)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
-				zhengli()
-				cangku()
+				--[[zhengli()
+				cangku()--]]
 				fanhuijuese()
 				count=0
 				kazhu=0
@@ -1130,10 +1138,11 @@ function shou()
 			else
 				kazhu=kazhu+1
 			end
-		elseif os.difftime(os.time(),tt) > 300 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
+		elseif os.difftime(os.time(),tt) > 1200 and DmFindPic('x_liaotian.bmp',85,1090,39,1104,52) then 
 			click(x,y)mSleep(1000)
 			if DmFindPic('beibao.bmp',85,846,614,858,626) then
 				zhengli()
+				fanhuijuese()
 				tt=os.time()			
 			else
 				kill()
@@ -1341,7 +1350,7 @@ function fanhuijuese()
 		--登录界面进入游戏
 		elseif DmFindPic('denglujinru.bmp',85,810,498,821,513) or DmFindPic("denglujinru1.bmp",85,807,501,823,512) then
 			click(x,y)
-		elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
+		elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)  or DmFindPic("dengluyichang1.bmp",80,547,487,562,500)	then
 			click(x,y)										
 		else
 			mSleep(300)
@@ -2082,10 +2091,10 @@ function connect()
 	--有角色直接进入游戏
 	elseif DmFindPic('juesejinru.bmp',85,519,572,532,583) or DmFindPic('juesejinru1.bmp',85,516,572,530,587)  then
 		click(x,y)	
-	elseif yichang>10 and DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
+	elseif yichang>10 and (DmFindPic("dengluyichang.bmp",85,550,488,563,498) or DmFindPic("dengluyichang1.bmp",80,547,487,562,500))	then
 		os.execute("reboot")
 	--登录异常刷机
-	elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498)	then
+	elseif DmFindPic("dengluyichang.bmp",85,550,488,563,498) or DmFindPic("dengluyichang1.bmp",80,547,487,562,500)	then
 		click(x,y)		
 		yichang=yichang+1
 	--vpn断开连接
