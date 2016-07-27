@@ -3247,7 +3247,7 @@ function getAccount()
 		mSleep   (500)
 		file:close()
 	end
-     account=string.match(account,"%s*(.-)%s*$")	
+    account=string.match(account,"%s*(.-)%s*$")	
 	return account
 end
 
