@@ -219,13 +219,13 @@ end
 function unlock()
 	jdwlLog('解除锁屏')
 	local dd = 0
-	if (DmFindPic('black.bmp',95,318,514,339,534) or DmFindPic("black1.bmp",95,301,477,319,501) or appRunning(PKG_NAME)==false )then
+--[[	if (DmFindPic('black.bmp',95,318,514,339,534) or DmFindPic("black1.bmp",95,301,477,319,501) or appRunning(PKG_NAME)==false )then
 		keyDown('HOME')
 		mSleep(500)
 		keyUp('HOME')
 		while true do	
 			if dd == 0 then myMove_RL(87,800,540,814,50) end
-			if DmFindPic('deng.bmp',90,483,980,644,1005) then
+			if DmFindPic('deng.bmp',90,483,980,644,1005) or DmFindPic("deng1.bmp",80,1070,586,1087,607) then
 				--notifyMessage('解锁完成')
 				logDebug('解锁完成')
 				break
@@ -241,6 +241,26 @@ function unlock()
 				mSleep(200)
 			end
 		end
+	end--]]
+	while true do
+		if DmFindPic('deng.bmp',90,483,980,644,1005) or DmFindPic("deng1.bmp",80,1070,586,1087,607) or appRunning(PKG_NAME) then
+			--notifyMessage('解锁完成')
+			logDebug('解锁完成')
+			break			
+		elseif (DmFindPic('black.bmp',95,318,514,339,534) or DmFindPic("black1.bmp",95,301,477,319,501) or appRunning(PKG_NAME)==false )then
+			keyDown('HOME')
+			mSleep(500)
+			keyUp('HOME')
+			myMove_RL(38,949,574,949,50)	mSleep(500)
+			appRun('com.apple.calculator')mSleep(500)	
+		--安全模式
+		elseif DmFindPic('de.bmp',85,383,14,411,36,1) or DmFindPic('de1.bmp',85,382,16,410,35) then
+			os.execute("reboot")
+		--sim卡
+		elseif DmFindPic('simcard.bmp',80,320,612,347,645) or DmFindPic("simcard1.bmp",80,309,608,344,646) then
+			click(x,y)
+		end
+		mSleep(200)
 	end
 end
 

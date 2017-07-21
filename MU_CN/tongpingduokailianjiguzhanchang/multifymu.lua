@@ -390,7 +390,7 @@ function multify()
 		--安全模式
 		elseif DmFindPic('de.bmp',85,383,14,411,36,1) or DmFindPic('de1.bmp',85,382,16,410,35) then	
 			os.execute('reboot')			
-		elseif DmFindPic('deng.bmp',90,483,980,644,1005) and DmFindPic('nine.bmp',90,485,503,641,578) then
+		elseif DmFindPic('deng.bmp',90,483,980,644,1005) and DmFindPic('nine.bmp',90,485,503,641,578)then
 			--[[appRun(packagename[1])mSleep(8000)--]]
 			multifyone()
 		elseif DmFindPic('deng.bmp',90,483,980,644,1005) and DmFindPic('six.bmp',90,485,663,641,819)then
